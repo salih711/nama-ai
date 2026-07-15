@@ -50,9 +50,10 @@ export default function Dashboard() {
         initial={{ opacity: 0, y: 20 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.4, delay: 0.1 }}
-        className="bg-gradient-to-r from-[#00703C] to-[#004d28] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between shadow-sm text-white overflow-hidden relative"
+        className="bg-[#006C54] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between text-white overflow-hidden relative"
+        style={{ boxShadow: "0 4px 20px rgba(0,108,84,0.22), 0 1px 4px rgba(0,108,84,0.12)" }}
       >
-        <div className="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
+        <div className="absolute left-0 bottom-0 w-72 h-40 bg-[#0E8A6A]/30 rounded-full blur-2xl translate-y-1/2 pointer-events-none" />
         
         <div className="flex items-start sm:items-center gap-4 relative z-10">
           <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0 shadow-inner">
@@ -61,14 +62,14 @@ export default function Dashboard() {
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <h3 className="text-sm font-semibold text-white/90">✨ توصية نماء اليوم</h3>
-              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-black/20 backdrop-blur-sm border border-white/10 text-[10px] font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/15 border border-white/20 text-[10px] font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#7EEBC8] animate-pulse" />
                 ثقة نماء {aiRecommendation.confidenceScore}%
               </div>
             </div>
             <p className="text-lg font-bold mb-1">{aiRecommendation.summary}</p>
             <p className="text-sm text-white/80 flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-green-300" />
+              <CheckCircle2 className="w-4 h-4 text-[#7EEBC8]" />
               وفر {aiRecommendation.savingsAmount.toLocaleString('ar-SA')} ريال
               <span className="text-white/50 text-xs mr-2 border-r border-white/20 pr-2">بناءً على تحليل معاملاتك الأخيرة</span>
             </p>

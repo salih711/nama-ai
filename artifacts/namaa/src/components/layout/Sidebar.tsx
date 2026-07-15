@@ -95,7 +95,7 @@ export function Sidebar() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-xs font-bold text-foreground leading-tight truncate">
-              صالح الحربي
+              صالح
             </div>
             <div className="text-[10px] text-muted-foreground leading-tight mt-0.5">حساب مميز</div>
           </div>

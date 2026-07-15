@@ -5,7 +5,7 @@ const router = Router();
 router.get("/dashboard", (req, res) => {
   res.json({
     user: {
-      name: "صالح الحربي",
+      name: "صالح",
       accountType: "حساب مميز",
     },
     healthScore: {

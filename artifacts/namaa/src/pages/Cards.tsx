@@ -34,7 +34,7 @@ export default function Cards() {
             className={cn(
               "shrink-0 w-[300px] h-[190px] rounded-3xl p-6 text-white text-right relative overflow-hidden transition-all snap-center",
               activeCard.id === card.id ? "ring-2 ring-primary ring-offset-4 ring-offset-background scale-[1.02]" : "opacity-80 hover:opacity-100",
-              card.type === "credit" ? "bg-gradient-to-br from-foreground to-foreground/80" : "bg-gradient-to-br from-primary to-[#004d28]"
+              card.type === "credit" ? "bg-gradient-to-br from-foreground to-foreground/80" : "bg-[#006C54]"
             )}
           >
             {/* Visual pattern */}

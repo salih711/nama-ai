@@ -17,7 +17,7 @@ export default function Settings() {
           <span className="text-2xl font-bold text-primary">ص</span>
         </div>
         <div className="flex-1">
-          <h2 className="text-xl font-bold text-foreground mb-1">صالح الحربي</h2>
+          <h2 className="text-xl font-bold text-foreground mb-1">صالح</h2>
           <p className="text-sm text-muted-foreground font-medium mb-3">saleh@example.com • 050 XXX XXXX</p>
           <div className="inline-flex px-3 py-1 bg-secondary rounded-lg text-xs font-bold text-foreground">
             حساب مميز
