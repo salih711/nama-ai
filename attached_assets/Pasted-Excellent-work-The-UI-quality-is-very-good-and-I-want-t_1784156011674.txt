@@ -1,0 +1,125 @@
+Excellent work.
+
+The UI quality is very good and I want to keep the overall design system, layout, spacing, navigation and styling.
+
+DO NOT redesign the application.
+
+Instead, shift the product identity from a financial dashboard to an AI Financial Agent.
+
+The first thing every user should notice is the AI.
+
+========================
+
+HOME PAGE
+
+========================
+
+Replace the current dashboard focus with an AI Recommendation Center.
+
+The top section should become a large AI recommendation card.
+
+Example:
+
+-----------------------------------
+
+✨ Namaa AI Recommendation
+
+Good morning, Saleh.
+
+After analyzing your recent transactions and spending behavior, I found 3 opportunities to improve your financial health.
+
+Estimated yearly benefit:
++ 1,850 SAR
+
+[ View Recommendations ]
+
+-----------------------------------
+
+This card should immediately communicate that the AI has already analyzed the customer's financial data.
+
+Below this card show:
+
+• Financial Health Score
+
+• Today's AI Recommendations
+
+• Best Card Recommendation
+
+• Saving Opportunity
+
+• Investment Opportunity
+
+========================
+
+AI EXPLANATIONS
+
+========================
+
+Every recommendation must explain WHY.
+
+Example:
+
+"Based on your monthly spending on travel, this card would earn you approximately 850 SAR cashback per year."
+
+NOT just:
+
+"Recommended Card"
+
+Every recommendation should have reasoning.
+
+========================
+
+AI AGENT
+
+========================
+
+Create a dedicated AI Agent panel.
+
+The AI should speak naturally.
+
+Example:
+
+"I analyzed your spending over the last 90 days."
+
+"I noticed your savings ratio is below your target."
+
+"I found a better financing option."
+
+"I detected an opportunity to increase your investment returns."
+
+This should feel like a real intelligent financial assistant.
+
+========================
+
+REMOVE DASHBOARD FEELING
+
+========================
+
+Reduce emphasis on charts.
+
+Charts support the AI.
+
+Charts should NOT be the hero.
+
+Recommendations should be the hero.
+
+========================
+
+KEEP
+
+========================
+
+Keep:
+
+- Same design system
+- Same navigation
+- Same colours
+- Same spacing
+- Same branding
+- Same premium appearance
+
+Do NOT redesign.
+
+Just make the product feel like an AI Financial Agent instead of a banking dashboard.
+
+The experience should impress Hackathon judges within the first 10 seconds.
