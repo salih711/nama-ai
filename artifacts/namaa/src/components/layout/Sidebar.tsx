@@ -43,7 +43,7 @@ export function Sidebar() {
               نماء
             </div>
             <div className="text-[10px] text-primary font-medium tracking-wide leading-tight">
-              البنك الأهلي
+              مصرف الإنماء
             </div>
           </div>
         </Link>
@@ -85,7 +85,7 @@ export function Sidebar() {
             </svg>
           </div>
           <span className="text-[10px] text-primary font-semibold tracking-wide">
-            منتج البنك الأهلي
+            منتج مصرف الإنماء
           </span>
         </div>
 

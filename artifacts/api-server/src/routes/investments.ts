@@ -23,8 +23,8 @@ router.get("/investments", (req, res) => {
       { label: "نقد", percent: 10, color: "#a78bfa" },
     ],
     holdings: [
-      { id: "h1", name: "صندوق أهلي للمؤشرات", currentValue: 21740, gainLoss: 2740, gainLossPercent: 14.4 },
-      { id: "h2", name: "ريت الراجحي العقاري", currentValue: 9650, gainLoss: 420, gainLossPercent: 4.5 },
+      { id: "h1", name: "صندوق الإنماء للمؤشرات", currentValue: 21740, gainLoss: 2740, gainLossPercent: 14.4 },
+      { id: "h2", name: "صندوق الإنماء العقاري", currentValue: 9650, gainLoss: 420, gainLossPercent: 4.5 },
       { id: "h3", name: "صندوق صكوك سعودية", currentValue: 11200, gainLoss: 800, gainLossPercent: 7.7 },
       { id: "h4", name: "صندوق قطاع التقنية", currentValue: 5730, gainLoss: 1270, gainLossPercent: 28.5 },
     ],

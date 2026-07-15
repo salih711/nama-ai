@@ -76,7 +76,7 @@ const MadaIcon = () => (
 const CARDS = [
   {
     id: "card-1",
-    type: "بطاقة البنك الأهلي البلاتينية",
+    type: "بطاقة الإنماء البلاتينية",
     network: "Visa",
     number: "•••• •••• •••• 8245",
     expiry: "09/27",
@@ -88,7 +88,7 @@ const CARDS = [
   },
   {
     id: "card-2",
-    type: "بطاقة البنك الأهلي الماسية",
+    type: "بطاقة الإنماء الماسية",
     network: "Visa",
     number: "•••• •••• •••• 4091",
     expiry: "11/26",

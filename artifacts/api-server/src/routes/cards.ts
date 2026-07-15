@@ -6,7 +6,7 @@ router.get("/cards", (req, res) => {
   res.json([
     {
       id: "card-001",
-      name: "بطاقة أهلي البلاتينية",
+      name: "بطاقة الإنماء البلاتينية",
       type: "بلاتينية",
       lastFour: "4821",
       expiryDate: "12/28",
@@ -26,7 +26,7 @@ router.get("/cards", (req, res) => {
     },
     {
       id: "card-002",
-      name: "بطاقة أهلي الماسية",
+      name: "بطاقة الإنماء الماسية",
       type: "ماسية",
       lastFour: "9034",
       expiryDate: "08/27",
@@ -43,7 +43,7 @@ router.get("/cards", (req, res) => {
     },
     {
       id: "card-003",
-      name: "البطاقة المدنية الإضافية",
+      name: "بطاقة الإنماء المدنية",
       type: "مدنية",
       lastFour: "7712",
       expiryDate: "03/26",

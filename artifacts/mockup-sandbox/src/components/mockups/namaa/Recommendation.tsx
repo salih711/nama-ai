@@ -40,7 +40,7 @@ export function Recommendation() {
                       صندوق استثماري
                     </div>
                     <h2 className="text-xl font-semibold text-gray-900 tracking-tight">
-                      محفظة أهلي للنمو — صندوق الاستثمار
+                      محفظة الإنماء للنمو — صندوق الاستثمار
                     </h2>
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export function Recommendation() {
 
           <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3">
             <button className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-white border border-gray-200 text-[14px] font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
-              حجز موعد مع مستشار أهلي
+              حجز موعد مع مستشار الإنماء
             </button>
             <button className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-[#00703C] text-[14px] font-medium text-white hover:bg-[#005e32] transition-colors shadow-sm">
               التقديم الإلكتروني

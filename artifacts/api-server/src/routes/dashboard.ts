@@ -22,7 +22,7 @@ router.get("/dashboard", (req, res) => {
     aiRecommendation: {
       id: "rec-001",
       title: "توصية ادخار ذكية",
-      summary: "وجد نماء فرصة لتوفير 420 ريال هذا الشهر بتحويل رصيدك إلى حساب التوفير المميز من الأهلي.",
+      summary: "وجد نماء فرصة لتوفير 420 ريال هذا الشهر بتحويل رصيدك إلى حساب التوفير المميز من مصرف الإنماء.",
       savingsAmount: 420,
       type: "savings",
       confidenceScore: 94,

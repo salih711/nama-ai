@@ -492,7 +492,7 @@ export function Dashboard() {
                   ),
                 },
                 {
-                  title: "إيداع راتب الأهلي",
+                  title: "إيداع الراتب الشهري",
                   category: "دخل",
                   date: "أمس",
                   amount: "+ 18,500.00 ريال",

@@ -45,7 +45,7 @@ export function AppLayout({ children, activePage }: AppLayoutProps) {
                 نماء
               </div>
               <div className="text-[10px] text-[#00703C] font-medium tracking-wide leading-tight">
-                البنك الأهلي
+                مصرف الإنماء
               </div>
             </div>
           </div>
@@ -89,7 +89,7 @@ export function AppLayout({ children, activePage }: AppLayoutProps) {
               </svg>
             </div>
             <span className="text-[10px] text-[#00703C] font-semibold tracking-wide">
-              منتج البنك الأهلي
+              منتج مصرف الإنماء
             </span>
           </div>
 

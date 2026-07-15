@@ -194,7 +194,7 @@ export function Settings() {
         <div className="mt-12 text-center flex flex-col items-center justify-center text-[#6B7280] gap-2 pb-8">
           <div className="flex justify-center items-center gap-1.5">
             <span className="text-[12px] font-medium tracking-wide text-[#6B7280]">
-              نماء — مقدم من البنك الأهلي
+              نماء — مقدم من مصرف الإنماء
             </span>
           </div>
         </div>

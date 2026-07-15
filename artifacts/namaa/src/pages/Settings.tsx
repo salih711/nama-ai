@@ -56,7 +56,7 @@ export default function Settings() {
       </div>
 
       <div className="text-center pt-8 text-xs font-bold text-muted-foreground">
-        نماء — مقدم من البنك الأهلي • الإصدار 1.0.0
+        نماء — مقدم من مصرف الإنماء • الإصدار 1.0.0
       </div>
 
     </div>

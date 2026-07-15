@@ -215,7 +215,7 @@ export function Investments() {
                 <HoldingRow 
                   icon={<BarChart3 className="w-4 h-4 text-[#00703C]" />}
                   iconBg="bg-[#00703C]/10"
-                  name="صندوق أهلي للمؤشرات"
+                  name="صندوق الإنماء للمؤشرات"
                   ticker="ALINMAETF"
                   allocation="35%"
                   value="16,912.00"
@@ -235,8 +235,8 @@ export function Investments() {
                 <HoldingRow 
                   icon={<Building2 className="w-4 h-4 text-[#85C7A5]" />}
                   iconBg="bg-[#85C7A5]/10"
-                  name="ريت الراجحي"
-                  ticker="RAJHIREIT"
+                  name="صندوق الإنماء العقاري"
+                  ticker="INMAAREIT"
                   allocation="15%"
                   value="7,248.00"
                   returnValue="+6.5%"

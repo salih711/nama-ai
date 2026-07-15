@@ -5,7 +5,7 @@ const router = Router();
 const recommendations = [
   {
     id: "rec-001",
-    productName: "محفظة أهلي للنمو — صندوق الاستثمار",
+    productName: "محفظة الإنماء للنمو — صندوق الاستثمار",
     productType: "استثمار",
     compatibilityScore: 92,
     confidenceScore: 94,
@@ -14,7 +14,7 @@ const recommendations = [
       { title: "يتناسب مع مستوى مخاطرتك", description: "استراتيجية المحفظة المتوازنة تتوافق تماماً مع تحملك للمخاطر المتوسطة." },
       { title: "يتوافق مع هدفك 5 سنوات", description: "أفق الصندوق الاستثماري المثالي هو 5-7 سنوات، بالضبط ما خططت له." },
       { title: "عوائد تنافسية في فئته", description: "متوسط العائد السنوي 10.2% خلال آخر 5 سنوات، أعلى من متوسط الفئة." },
-      { title: "متوافق مع الشريعة الإسلامية", description: "الصندوق معتمد من هيئة الرقابة الشرعية بالبنك الأهلي." },
+      { title: "متوافق مع الشريعة الإسلامية", description: "الصندوق معتمد من هيئة الرقابة الشرعية بمصرف الإنماء." },
     ],
     advantages: [
       "عائد سنوي متوقع 8-12% بناءً على الأداء التاريخي",
@@ -30,14 +30,14 @@ const recommendations = [
     ],
     nextStep: {
       primary: "فتح حساب استثماري والبدء فوراً",
-      secondary: "حجز موعد مع مستشار أهلي",
+      secondary: "حجز موعد مع مستشار الإنماء",
     },
     explainableAI: {
       steps: [
         { label: "تحليل الدخل الشهري والتدفق النقدي", done: true },
         { label: "تحليل المعاملات وأنماط الإنفاق", done: true },
         { label: "تحليل الالتزامات المالية الحالية", done: true },
-        { label: "مقارنة 47 منتجاً استثمارياً في الأهلي", done: true },
+        { label: "مقارنة 47 منتجاً استثمارياً في الإنماء", done: true },
         { label: "اختيار أفضل منتج وفق ملفك المالي", done: true },
       ],
       confidenceScore: 94,
@@ -45,7 +45,7 @@ const recommendations = [
   },
   {
     id: "rec-002",
-    productName: "بطاقة أهلي الماسية بلاس",
+    productName: "بطاقة الإنماء الماسية بلاس",
     productType: "بطاقة ائتمانية",
     compatibilityScore: 87,
     confidenceScore: 89,
@@ -75,7 +75,7 @@ const recommendations = [
         { label: "تحليل أنماط الإنفاق الشهرية", done: true },
         { label: "تحليل البطاقات الحالية ومزاياها", done: true },
         { label: "حساب الاسترداد المحتمل لكل بطاقة", done: true },
-        { label: "مقارنة 12 بطاقة في محفظة الأهلي", done: true },
+        { label: "مقارنة 12 بطاقة في محفظة الإنماء", done: true },
         { label: "اختيار البطاقة الأمثل لملفك", done: true },
       ],
       confidenceScore: 89,

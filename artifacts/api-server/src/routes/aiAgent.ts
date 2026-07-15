@@ -12,7 +12,7 @@ const questions: Record<number, object> = {
       { key: "financing", label: "تمويل شخصي", description: "احصل على تمويل بأفضل شروط تناسب دخلك والتزاماتك" },
       { key: "investment", label: "الاستثمار", description: "نمّ ثروتك بخيارات استثمارية متوافقة مع أهدافك" },
       { key: "saving", label: "الادخار", description: "ضاعف مدخراتك بخطط مدروسة ومنتجات عالية العائد" },
-      { key: "banking", label: "خدمات مصرفية", description: "اكتشف خدمات الأهلي التي تناسب احتياجاتك اليومية" },
+      { key: "banking", label: "خدمات مصرفية", description: "اكتشف خدمات الإنماء التي تناسب احتياجاتك اليومية" },
     ],
     profileSoFar: [
       { label: "الهدف", value: "قيد التحديد", resolved: false },
