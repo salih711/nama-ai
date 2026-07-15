@@ -46,7 +46,7 @@ export function AIAgent() {
         .delay-500 { animation-delay: 500ms; }
       `}</style>
 
-      <div className="flex h-full w-full bg-[#F8F9FA]">
+      <div className="flex h-full w-full bg-[#F8F9FA]" dir="rtl" style={{ fontFamily: "'Tajawal', 'Cairo', sans-serif" }}>
         {/* Main Wizard Area */}
         <div className="flex-1 flex flex-col items-center overflow-y-auto px-8 py-16">
           <div className="w-full max-w-2xl space-y-12 pb-24">
@@ -56,48 +56,48 @@ export function AIAgent() {
               <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-[#00703C]/10 mb-2 text-[#00703C]">
                 <SparklesIcon />
               </div>
-              <h1 className="text-3xl font-semibold text-[#111827] tracking-tight">Namaa AI Agent</h1>
-              <p className="text-[#6B7280] text-base">Making smarter financial decisions together.</p>
+              <h1 className="text-3xl font-semibold text-[#111827] tracking-tight">نماء — مستشارك المالي الذكي</h1>
+              <p className="text-[#6B7280] text-base">نساعدك في اتخاذ قرارات مالية أفضل، خطوة بخطوة.</p>
             </div>
 
             {/* Progress */}
             <div className="w-full space-y-2.5 animate-fade-in-up delay-100">
               <div className="flex justify-between text-[13px] font-medium text-[#9CA3AF]">
-                <span>Step 2 of 4</span>
-                <span className="text-[#00703C]">50%</span>
+                <span>الخطوة 2 من 5</span>
+                <span className="text-[#00703C]">40%</span>
               </div>
-              <div className="w-full h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden">
-                <div className="h-full bg-[#00703C] w-1/2 rounded-full transition-all duration-700 ease-out"></div>
+              <div className="w-full h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden flex">
+                <div className="h-full bg-[#00703C] w-[40%] rounded-full transition-all duration-700 ease-out"></div>
               </div>
             </div>
 
             {/* Question 1 (Answered / Active) */}
             <div className="space-y-5 animate-fade-in-up delay-200">
-              <h2 className="text-[22px] font-medium text-[#111827] tracking-tight">What would you like to achieve today?</h2>
+              <h2 className="text-[22px] font-medium text-[#111827] tracking-tight">ماذا تريد أن تحقق اليوم؟</h2>
               
               <div className="grid grid-cols-2 gap-4">
-                <OptionCard icon={<CreditCardIcon />} title="Find a Credit Card" desc="Discover the best card for your spending" />
-                <OptionCard icon={<BanknoteIcon />} title="Personal Financing" desc="Calculate your borrowing power" />
-                <OptionCard icon={<TrendingUpIcon />} title="Investment" desc="Grow your wealth intelligently" selected />
-                <OptionCard icon={<WalletIcon />} title="Saving" desc="Build an emergency fund" />
-                <OptionCard icon={<BuildingIcon />} title="Banking Services" desc="Accounts and daily banking" />
+                <OptionCard icon={<CreditCardIcon />} title="أفضل بطاقة ائتمانية" desc="اكتشف البطاقة الأنسب لمصروفاتك" />
+                <OptionCard icon={<BanknoteIcon />} title="تمويل شخصي" desc="احسب قدرتك التمويلية" />
+                <OptionCard icon={<TrendingUpIcon />} title="الاستثمار" desc="نمي ثروتك بذكاء" selected />
+                <OptionCard icon={<WalletIcon />} title="الادخار" desc="ابنِ صندوق طوارئ" />
+                <OptionCard icon={<BuildingIcon />} title="خدمات مصرفية" desc="حسابات وخدمات بنكية يومية" />
               </div>
             </div>
 
             {/* Question 2 (Revealed) */}
             <div className="space-y-5 animate-fade-in-up delay-400">
-              <h2 className="text-[22px] font-medium text-[#111827] tracking-tight">What is your investment goal?</h2>
+              <h2 className="text-[22px] font-medium text-[#111827] tracking-tight">ما هدفك من الاستثمار؟</h2>
               
               <div className="flex flex-col gap-3">
-                <RowOptionCard title="Capital Growth" desc="Maximized long-term returns with higher risk tolerance" selected />
-                <RowOptionCard title="Regular Income" desc="Steady dividend payouts with moderate risk" />
-                <RowOptionCard title="Capital Preservation" desc="Protecting your principal with lower returns" />
+                <RowOptionCard title="نمو رأس المال" desc="تحقيق أقصى عوائد على المدى الطويل مع تحمل مخاطر أعلى" selected />
+                <RowOptionCard title="دخل منتظم" desc="توزيعات أرباح مستقرة مع مخاطر معتدلة" />
+                <RowOptionCard title="حفظ رأس المال" desc="حماية رأس المال مع عوائد أقل" />
               </div>
             </div>
 
             <div className="pt-8 flex justify-end animate-fade-in-up delay-500">
                <button className="bg-[#00703C] hover:bg-[#005a30] text-white px-8 py-3.5 rounded-xl font-medium transition-all shadow-[0_1px_2px_rgba(0,0,0,0.1)] active:scale-[0.98]">
-                 Continue
+                 متابعة
                </button>
             </div>
 
@@ -105,18 +105,16 @@ export function AIAgent() {
         </div>
 
         {/* Sidebar Panel - Profile Being Built */}
-        <div className="w-[340px] bg-white border-l border-[#F0F0F0] p-8 flex flex-col shadow-[-4px_0_24px_rgba(0,0,0,0.01)] z-10">
+        <div className="w-[340px] bg-white border-r border-[#F0F0F0] p-8 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.01)] z-10">
           <div className="space-y-1.5 mb-10">
-            <h3 className="text-xs font-bold text-[#111827] uppercase tracking-widest">Your Profile</h3>
-            <p className="text-[13px] text-[#6B7280]">Namaa is learning about your needs to tailor recommendations.</p>
+            <h3 className="text-xs font-bold text-[#111827] uppercase tracking-widest">ملفك المالي يتشكل</h3>
+            <p className="text-[13px] text-[#6B7280]">يتعلم نماء المزيد عن احتياجاتك لتقديم توصيات مناسبة.</p>
           </div>
 
           <div className="space-y-6 flex-1">
-            <ProfileItem label="Goal" value="Investment" active />
-            <ProfileItem label="Strategy" value="Capital Growth" active />
-            <ProfileItem label="Risk Tolerance" value="Pending..." />
-            <ProfileItem label="Timeline" value="Pending..." />
-            <ProfileItem label="Initial Amount" value="Pending..." />
+            <ProfileItem label="الهدف" value="الاستثمار" active />
+            <ProfileItem label="المخاطرة" value="قيد التحليل" />
+            <ProfileItem label="المدة" value="قيد التحليل" />
           </div>
 
           <div className="p-4 bg-[#F8F9FA] rounded-xl border border-[#F0F0F0] mt-auto">
@@ -125,7 +123,7 @@ export function AIAgent() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <p className="text-[13px] text-[#6B7280] leading-relaxed">
-                  I will use these details to recommend a tailored portfolio composed of local and global mutual funds.
+                  نماء يحلل بياناتك لتقديم توصية مخصصة لك — وليس توصية عامة.
                 </p>
              </div>
           </div>
@@ -181,7 +179,7 @@ function ProfileItem({ label, value, active = false }: { label: string; value: s
        <div className={`text-[14px] font-medium flex items-center gap-2 ${active ? "text-[#111827]" : "text-[#9CA3AF]"}`}>
          {value}
          {active && (
-           <div className="w-4 h-4 rounded-full bg-[#00703C]/10 flex items-center justify-center ml-1">
+           <div className="w-4 h-4 rounded-full bg-[#00703C]/10 flex items-center justify-center mr-1">
              <svg className="w-2.5 h-2.5 text-[#00703C]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
              </svg>

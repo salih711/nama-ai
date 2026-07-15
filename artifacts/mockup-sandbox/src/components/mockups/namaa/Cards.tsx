@@ -76,7 +76,7 @@ const MadaIcon = () => (
 const CARDS = [
   {
     id: "card-1",
-    type: "Platinum",
+    type: "بطاقة البنك الأهلي البلاتينية",
     network: "Visa",
     number: "•••• •••• •••• 8245",
     expiry: "09/27",
@@ -88,7 +88,7 @@ const CARDS = [
   },
   {
     id: "card-2",
-    type: "Signature",
+    type: "بطاقة البنك الأهلي الماسية",
     network: "Visa",
     number: "•••• •••• •••• 4091",
     expiry: "11/26",
@@ -100,7 +100,7 @@ const CARDS = [
   },
   {
     id: "card-3",
-    type: "Mada Debit",
+    type: "بطاقة مجمدة",
     network: "Mada",
     number: "•••• •••• •••• 1158",
     expiry: "02/25",
@@ -113,12 +113,12 @@ const CARDS = [
 ];
 
 const TRANSACTIONS = [
-  { id: 1, merchant: "Apple Store", date: "Today, 14:32", amount: -4500, category: "Electronics" },
-  { id: 2, merchant: "STC Pay", date: "Yesterday, 09:15", amount: -500, category: "Transfer" },
-  { id: 3, merchant: "Starbucks", date: "Yesterday, 08:45", amount: -25, category: "Food & Beverage" },
-  { id: 4, merchant: "Payment - Thank You", date: "Oct 12, 11:00", amount: 2000, category: "Payment" },
-  { id: 5, merchant: "Uber", date: "Oct 11, 22:14", amount: -65, category: "Transportation" },
-  { id: 6, merchant: "Jarir Bookstore", date: "Oct 10, 16:20", amount: -320, category: "Shopping" },
+  { id: 1, merchant: "متجر آبل", date: "اليوم، 14:32", amount: -4500, category: "إلكترونيات" },
+  { id: 2, merchant: "إس تي سي باي", date: "أمس، 09:15", amount: -500, category: "حوالة" },
+  { id: 3, merchant: "ستاربكس", date: "أمس، 08:45", amount: -25, category: "مطاعم ومقاهي" },
+  { id: 4, merchant: "دفعة - شكراً لك", date: "12 أكتوبر، 11:00", amount: 2000, category: "مدفوعات" },
+  { id: 5, merchant: "أوبر", date: "11 أكتوبر، 22:14", amount: -65, category: "مواصلات" },
+  { id: 6, merchant: "مكتبة جرير", date: "10 أكتوبر، 16:20", amount: -320, category: "تسوق" },
 ];
 
 export function Cards() {
@@ -129,11 +129,11 @@ export function Cards() {
   const formatCurrency = (amount: number) => {
     const isNegative = amount < 0;
     const absAmount = Math.abs(amount);
-    const formatted = new Intl.NumberFormat("en-SA", {
+    const formatted = new Intl.NumberFormat("ar-SA", {
       style: "currency",
       currency: "SAR",
       minimumFractionDigits: 0,
-    }).format(absAmount);
+    }).format(absAmount).replace("SAR", "ريال").replace("ر.س.", "ريال").replace("ر.س", "ريال");
     
     return isNegative ? `- ${formatted}` : `+ ${formatted}`;
   };
@@ -144,17 +144,17 @@ export function Cards() {
 
   return (
     <AppLayout activePage="cards">
-      <div className="max-w-[1080px] mx-auto p-8 pb-20">
+      <div className="max-w-[1080px] mx-auto p-8 pb-20" style={{ fontFamily: "'Tajawal', 'Cairo', sans-serif" }}>
         
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900 tracking-tight mb-1">My Cards</h1>
-            <p className="text-sm text-gray-500">Manage your physical and digital cards</p>
+            <h1 className="text-2xl font-semibold text-gray-900 tracking-tight mb-1">بطاقاتي</h1>
+            <p className="text-sm text-gray-500">إدارة بطاقاتك الفعلية والرقمية</p>
           </div>
           <button className="flex items-center gap-2 bg-white border border-gray-200 text-gray-800 px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors shadow-sm">
             <PlusIcon />
-            Add New Card
+            إضافة بطاقة
           </button>
         </div>
 
@@ -184,7 +184,7 @@ export function Cards() {
                 {card.locked && (
                   <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] rounded-2xl z-10 flex items-center justify-center">
                     <div className="bg-white/90 text-gray-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm flex items-center gap-1.5">
-                      <LockIcon /> Locked
+                      <LockIcon /> مجمدة
                     </div>
                   </div>
                 )}
@@ -202,11 +202,11 @@ export function Cards() {
 
                 <div className="flex justify-between items-end relative z-0">
                   <div>
-                    <div className="text-[10px] opacity-60 uppercase tracking-wider mb-0.5">Card Holder</div>
-                    <div className="font-medium text-sm tracking-wide">SALEH ALHARBI</div>
+                    <div className="text-[10px] opacity-60 uppercase tracking-wider mb-0.5">اسم حامل البطاقة</div>
+                    <div className="font-medium text-sm tracking-wide">صالح الحربي</div>
                   </div>
                   <div>
-                    <div className="text-[10px] opacity-60 uppercase tracking-wider mb-0.5 text-right">Valid Thru</div>
+                    <div className="text-[10px] opacity-60 uppercase tracking-wider mb-0.5 text-right">تاريخ الانتهاء</div>
                     <div className="font-medium text-sm font-mono">{card.expiry}</div>
                   </div>
                 </div>
@@ -226,23 +226,23 @@ export function Cards() {
               <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                 <div className="flex justify-between items-end mb-6">
                   <div>
-                    <div className="text-sm font-medium text-gray-500 mb-1">Available Balance</div>
+                    <div className="text-sm font-medium text-gray-500 mb-1">المتاح</div>
                     <div className="text-3xl font-semibold text-gray-900 tracking-tight">
-                      SAR {selectedCard.available.toLocaleString()}
+                      {selectedCard.available.toLocaleString()} ريال
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-medium text-gray-500 mb-1">Outstanding</div>
+                    <div className="text-sm font-medium text-gray-500 mb-1">المستحق</div>
                     <div className="text-lg font-medium text-gray-900">
-                      SAR {selectedCard.outstanding.toLocaleString()}
+                      {selectedCard.outstanding.toLocaleString()} ريال
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex justify-between text-xs font-medium text-gray-500">
-                    <span>Usage ({Math.round(utilization)}%)</span>
-                    <span>Total Limit: SAR {selectedCard.limit.toLocaleString()}</span>
+                    <span>الاستخدام ({Math.round(utilization)}%)</span>
+                    <span>حد الائتمان: {selectedCard.limit.toLocaleString()} ريال</span>
                   </div>
                   <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
                     <div 
@@ -258,13 +258,13 @@ export function Cards() {
               <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                  <div className="flex justify-between items-end mb-2">
                   <div>
-                    <div className="text-sm font-medium text-gray-500 mb-1">Account Balance</div>
+                    <div className="text-sm font-medium text-gray-500 mb-1">رصيد الحساب</div>
                     <div className="text-3xl font-semibold text-gray-900 tracking-tight">
-                      SAR {selectedCard.available.toLocaleString()}
+                      {selectedCard.available.toLocaleString()} ريال
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-500">Linked to Current Account ending in 8892</p>
+                <p className="text-sm text-gray-500">مرتبط بالحساب الجاري المنتهي بـ 8892</p>
               </div>
             )}
 
@@ -274,21 +274,21 @@ export function Cards() {
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center ${selectedCard.locked ? 'bg-gray-100 text-gray-600' : 'bg-red-50 text-red-600'}`}>
                   {selectedCard.locked ? <UnlockIcon /> : <LockIcon />}
                 </div>
-                <span className="text-xs font-medium text-gray-700">{selectedCard.locked ? 'Unlock Card' : 'Freeze Card'}</span>
+                <span className="text-xs font-medium text-gray-700">{selectedCard.locked ? 'إلغاء تجميد البطاقة' : 'تجميد البطاقة'}</span>
               </button>
               
               <button className="flex flex-col items-center justify-center gap-3 bg-white p-4 rounded-2xl border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-gray-200 hover:bg-gray-50 transition-colors">
                 <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-700">
                   <EyeIcon />
                 </div>
-                <span className="text-xs font-medium text-gray-700">View PIN</span>
+                <span className="text-xs font-medium text-gray-700">عرض الرقم السري</span>
               </button>
 
               <button className="flex flex-col items-center justify-center gap-3 bg-white p-4 rounded-2xl border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-gray-200 hover:bg-gray-50 transition-colors">
                 <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-700">
                   <ReplaceIcon />
                 </div>
-                <span className="text-xs font-medium text-gray-700">Replace</span>
+                <span className="text-xs font-medium text-gray-700">استبدال البطاقة</span>
               </button>
 
               <button 
@@ -298,7 +298,7 @@ export function Cards() {
                 <div className="w-10 h-10 rounded-full bg-[#00703C]/10 flex items-center justify-center text-[#00703C]">
                   <TrendUpIcon />
                 </div>
-                <span className="text-xs font-medium text-gray-700">Increase Limit</span>
+                <span className="text-xs font-medium text-gray-700">رفع الحد</span>
               </button>
             </div>
 
@@ -312,18 +312,18 @@ export function Cards() {
                   <GiftIcon />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">Alinma Rewards</h3>
-                  <p className="text-white/80 text-sm">Earn points on every purchase</p>
+                  <h3 className="font-semibold text-lg">النقاط المكتسبة هذا الشهر</h3>
+                  <p className="text-white/80 text-sm">اكسب نقاط مع كل عملية شراء</p>
                 </div>
               </div>
               
               <div className="flex items-end justify-between relative z-10">
                 <div>
-                  <div className="text-3xl font-bold tracking-tight mb-1">2,340 <span className="text-lg font-medium text-white/80">pts</span></div>
-                  <div className="text-xs text-white/70">Expiring in 60 days: 0 pts</div>
+                  <div className="text-3xl font-bold tracking-tight mb-1">2,340 <span className="text-lg font-medium text-white/80">نقطة</span></div>
+                  <div className="text-xs text-white/70">تنتهي خلال 60 يوم: 0 نقطة</div>
                 </div>
                 <button className="bg-white text-[#00703C] px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-50 transition-colors shadow-sm">
-                  Redeem
+                  استبدال النقاط
                 </button>
               </div>
             </div>
@@ -334,16 +334,16 @@ export function Cards() {
           <div className="lg:col-span-5">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full flex flex-col">
               <div className="p-6 border-b border-gray-50 flex justify-between items-center">
-                <h3 className="font-semibold text-gray-900">Recent Transactions</h3>
-                <button className="text-sm font-medium text-[#00703C] hover:text-[#005a30]">View All</button>
+                <h3 className="font-semibold text-gray-900">آخر المعاملات</h3>
+                <button className="text-sm font-medium text-[#00703C] hover:text-[#005a30]">عرض الكل</button>
               </div>
               
               <div className="flex-1 p-2">
                 {selectedCard.locked ? (
                    <div className="h-full flex flex-col items-center justify-center text-center p-8 text-gray-400">
                      <LockIcon />
-                     <p className="mt-4 text-sm font-medium text-gray-600">Card is currently locked</p>
-                     <p className="text-xs mt-1">Unlock your card to view recent activity.</p>
+                     <p className="mt-4 text-sm font-medium text-gray-600">البطاقة مجمدة حالياً</p>
+                     <p className="text-xs mt-1">قم بإلغاء تجميد بطاقتك لعرض النشاط الأخير.</p>
                    </div>
                 ) : (
                   <div className="space-y-1">

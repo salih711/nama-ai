@@ -4,18 +4,18 @@ import { AppLayout } from "./_shared/AppLayout";
 export function Recommendation() {
   return (
     <AppLayout activePage="ai-agent">
-      <div className="max-w-5xl mx-auto px-8 py-12">
+      <div className="max-w-5xl mx-auto px-8 py-12" style={{ fontFamily: "'Tajawal', 'Cairo', sans-serif" }}>
         {/* Header */}
         <div className="mb-10">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#00703C]/10 text-[#00703C] text-[11px] font-semibold tracking-wide uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#00703C]/10 text-[#00703C] text-[11px] font-semibold tracking-wide mb-4">
             <SparklesIcon className="w-3.5 h-3.5" />
-            Analysis Complete
+            استثمار موصى به
           </div>
           <h1 className="text-[32px] font-semibold text-gray-900 tracking-tight leading-tight mb-2">
-            Namaa's Recommendation
+            توصية نماء
           </h1>
           <p className="text-[15px] text-gray-500">
-            Based on your financial profile, risk tolerance, and 5-year growth objectives.
+            بناءً على تحليل ملفك المالي
           </p>
         </div>
 
@@ -37,30 +37,30 @@ export function Recommendation() {
                   </div>
                   <div>
                     <div className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-600 mb-1.5">
-                      Mutual Fund
+                      صندوق استثماري
                     </div>
                     <h2 className="text-xl font-semibold text-gray-900 tracking-tight">
-                      Alinma Investment Portfolio — Growth Fund
+                      محفظة أهلي للنمو — صندوق الاستثمار
                     </h2>
                   </div>
                 </div>
               </div>
               <p className="text-[14px] text-gray-500 leading-relaxed max-w-lg mb-8">
-                A Sharia-compliant investment fund aiming for long-term capital appreciation by investing in a diversified portfolio of local and global equities.
+                صندوق استثماري متوافق مع أحكام الشريعة يهدف إلى تنمية رأس المال على المدى الطويل من خلال الاستثمار في محفظة متنوعة من الأسهم المحلية والعالمية.
               </p>
             </div>
             
             <div className="flex items-center gap-8 border-t border-gray-50 pt-6 mt-2">
               <div>
-                <div className="text-[12px] text-gray-400 font-medium mb-1">Expected Return</div>
-                <div className="text-lg font-semibold text-gray-900">8.5% - 12.0%</div>
+                <div className="text-[12px] text-gray-400 font-medium mb-1">العائد المتوقع</div>
+                <div className="text-lg font-semibold text-gray-900" dir="ltr">8.5% - 12.0%</div>
               </div>
               <div className="w-px h-10 bg-gray-100"></div>
               <div>
-                <div className="text-[12px] text-gray-400 font-medium mb-1">Risk Level</div>
+                <div className="text-[12px] text-gray-400 font-medium mb-1">مستوى المخاطرة</div>
                 <div className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  Moderate-High
-                  <div className="flex gap-0.5">
+                  متوسط - مرتفع
+                  <div className="flex gap-0.5" dir="ltr">
                     <div className="w-1.5 h-3 bg-gray-200 rounded-full"></div>
                     <div className="w-1.5 h-4 bg-gray-200 rounded-full"></div>
                     <div className="w-1.5 h-5 bg-[#00703C] rounded-full"></div>
@@ -70,8 +70,8 @@ export function Recommendation() {
               </div>
               <div className="w-px h-10 bg-gray-100"></div>
               <div>
-                <div className="text-[12px] text-gray-400 font-medium mb-1">Min. Investment</div>
-                <div className="text-lg font-semibold text-gray-900">5,000 SAR</div>
+                <div className="text-[12px] text-gray-400 font-medium mb-1">الحد الأدنى للاستثمار</div>
+                <div className="text-lg font-semibold text-gray-900">5,000 ريال</div>
               </div>
             </div>
           </div>
@@ -105,31 +105,31 @@ export function Recommendation() {
                 <span className="text-3xl font-bold text-gray-900 tracking-tight">92%</span>
               </div>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">Excellent Match</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">درجة التوافق</h3>
             <p className="text-[13px] text-gray-500 max-w-[200px]">
-              Highly aligned with your financial goals and risk capacity.
+              متوافق بشكل كبير مع أهدافك المالية وقدرتك على تحمل المخاطر.
             </p>
           </div>
         </div>
 
         {/* Why Namaa Selected This */}
         <div className="mb-10">
-          <h3 className="text-[15px] font-semibold text-gray-900 mb-5">Why Namaa selected this</h3>
+          <h3 className="text-[15px] font-semibold text-gray-900 mb-5">لماذا اختار نماء هذا؟</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <ReasonCard
               icon={<TargetIcon className="w-5 h-5 text-[#00703C]" />}
-              title="Aligns with 5-year goal"
-              description="Your objective to purchase real estate requires growth that outpaces inflation. This fund targets the exact growth bracket needed."
+              title="يتوافق مع هدفك لـ 5 سنوات"
+              description="هدفك لشراء عقار يتطلب نمواً يتجاوز معدل التضخم. هذا الصندوق يستهدف شريحة النمو المطلوبة."
             />
             <ReasonCard
               icon={<ActivityIcon className="w-5 h-5 text-[#00703C]" />}
-              title="Matches risk appetite"
-              description="Your responses to market volatility scenarios indicated comfort with moderate-to-high fluctuations for long-term gains."
+              title="يتناسب مع مستوى المخاطرة لديك"
+              description="إجاباتك على سيناريوهات تقلبات السوق أشارت إلى ارتياحك للتقلبات المعتدلة إلى المرتفعة لتحقيق مكاسب طويلة الأجل."
             />
             <ReasonCard
               icon={<ShieldCheckIcon className="w-5 h-5 text-[#00703C]" />}
-              title="Diversification benefit"
-              description="You currently hold primarily cash and low-risk deposits. Adding equity exposure balances your overall portfolio."
+              title="عوائد تنافسية في فئته"
+              description="إضافة التعرض للأسهم يوازن محفظتك الاستثمارية بشكل عام ويعزز العوائد بما يتناسب مع المعايير."
             />
           </div>
         </div>
@@ -137,20 +137,52 @@ export function Recommendation() {
         {/* Advantages and Risks */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
           <div>
-            <h3 className="text-[15px] font-semibold text-gray-900 mb-4">Advantages</h3>
+            <h3 className="text-[15px] font-semibold text-gray-900 mb-4">المزايا</h3>
             <div className="space-y-3">
-              <ChecklistItem text="Expected annual return 8-12% based on historicals" />
-              <ChecklistItem text="100% Sharia-compliant investments" />
-              <ChecklistItem text="Low management fees (0.75% annually)" />
-              <ChecklistItem text="Flexible contribution amounts with auto-invest" />
+              <ChecklistItem text="عائد سنوي متوقع 8-12%" />
+              <ChecklistItem text="متوافق مع الشريعة الإسلامية" />
+              <ChecklistItem text="رسوم إدارة منخفضة" />
+              <ChecklistItem text="مرونة في المساهمات" />
             </div>
           </div>
           <div>
-            <h3 className="text-[15px] font-semibold text-gray-900 mb-4">Possible Risks</h3>
+            <h3 className="text-[15px] font-semibold text-gray-900 mb-4">المخاطر المحتملة</h3>
             <div className="space-y-3">
-              <RiskItem text="Market fluctuations may affect short-term returns" />
-              <RiskItem text="Minimum 12-month recommended holding period" />
-              <RiskItem text="Equities carry higher intrinsic volatility than Sukuk" />
+              <RiskItem text="تقلبات السوق قد تؤثر على العوائد قصيرة المدى" />
+              <RiskItem text="فترة حد أدنى 12 شهراً" />
+            </div>
+          </div>
+        </div>
+
+        {/* Explainable AI Card */}
+        <div className="mb-10">
+          <div className="bg-white rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] border border-gray-100 border-r-4 border-r-[#00703C]">
+            <h3 className="text-[15px] font-semibold text-gray-900 mb-4">كيف اتخذ نماء هذا القرار؟</h3>
+            <div className="space-y-2 mb-6">
+              {[
+                "تحليل الدخل",
+                "تحليل المعاملات",
+                "تحليل الالتزامات",
+                "مقارنة منتجات البنك",
+                "اختيار أفضل منتج",
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-[#00703C]/10 flex items-center justify-center text-[#00703C]">
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                      <path d="M5 8.5L7 10.5L11 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <span className="text-[14px] text-gray-700">{item}</span>
+                </div>
+              ))}
+            </div>
+            <div className="border-t border-gray-50 pt-4">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-[13px] font-medium text-gray-600">درجة الثقة: 94%</span>
+              </div>
+              <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden" dir="ltr">
+                <div className="h-full bg-[#00703C] rounded-full" style={{ width: '94%' }}></div>
+              </div>
             </div>
           </div>
         </div>
@@ -158,30 +190,30 @@ export function Recommendation() {
         {/* Next Step / CTA */}
         <div className="bg-white rounded-2xl p-8 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
           {/* Subtle background decoration */}
-          <div className="absolute right-0 top-0 w-64 h-64 bg-[#00703C]/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/2 pointer-events-none"></div>
+          <div className="absolute left-0 top-0 w-64 h-64 bg-[#00703C]/5 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/2 pointer-events-none"></div>
           
           <div className="relative z-10 flex-1">
             <div className="flex items-center gap-3 mb-2">
-              <h3 className="text-xl font-semibold text-gray-900 tracking-tight">Ready to proceed?</h3>
+              <h3 className="text-xl font-semibold text-gray-900 tracking-tight">هل أنت مستعد للبدء؟</h3>
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-gray-50 border border-gray-100">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#00703C]"></div>
-                <span className="text-[11px] font-medium text-gray-600">Namaa Confidence: 94%</span>
+                <span className="text-[11px] font-medium text-gray-600">ثقة نماء: 94%</span>
               </div>
             </div>
             <p className="text-[14px] text-gray-500 max-w-lg mb-5">
-              You can start investing directly online, or schedule a quick 15-minute consultation with a dedicated wealth advisor to discuss this recommendation.
+              يمكنك البدء بالاستثمار مباشرة عبر الإنترنت، أو تحديد موعد استشارة سريعة مع مستشار مالي مخصص لمناقشة هذه التوصية.
             </p>
-            <div className="w-full max-w-xs h-1 bg-gray-100 rounded-full overflow-hidden">
+            <div className="w-full max-w-xs h-1 bg-gray-100 rounded-full overflow-hidden" dir="ltr">
               <div className="h-full bg-[#00703C] rounded-full" style={{ width: '94%' }}></div>
             </div>
           </div>
 
           <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3">
             <button className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-white border border-gray-200 text-[14px] font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
-              Schedule Advisor
+              حجز موعد مع مستشار أهلي
             </button>
             <button className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-[#00703C] text-[14px] font-medium text-white hover:bg-[#005e32] transition-colors shadow-sm">
-              Apply Online
+              التقديم الإلكتروني
             </button>
           </div>
         </div>

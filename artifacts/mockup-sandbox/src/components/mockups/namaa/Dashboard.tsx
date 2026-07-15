@@ -4,14 +4,20 @@ import { AppLayout } from "./_shared/AppLayout";
 export function Dashboard() {
   return (
     <AppLayout activePage="dashboard">
-      <div className="p-8 max-w-[1100px] mx-auto w-full flex flex-col">
+      <div 
+        className="p-8 max-w-[1100px] mx-auto w-full flex flex-col"
+        style={{ fontFamily: "'Tajawal', 'Cairo', sans-serif" }}
+      >
         {/* Header */}
-        <header className="flex justify-between items-center mb-8">
+        <header className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-[24px] font-semibold text-[#111827] tracking-tight">
-              Welcome back, Saleh
+              مرحباً، صالح 👋
             </h1>
-            <p className="text-[14px] text-[#6B7280] mt-1">October 24, 2023</p>
+            <p className="text-[15px] text-[#4B5563] mt-1.5 font-medium">
+              راجع نماء وضعك المالي اليوم، ولديه توصيات جديدة لك.
+            </p>
+            <p className="text-[13px] text-[#9CA3AF] mt-1">24 أكتوبر 2023</p>
           </div>
           <button className="w-10 h-10 rounded-full bg-white border border-[#E5E7EB] shadow-sm flex items-center justify-center text-[#4B5563] hover:text-[#111827] relative transition-colors">
             <svg
@@ -32,33 +38,25 @@ export function Dashboard() {
         </header>
 
         {/* AI Recommendation */}
-        <div className="bg-[#00703C]/[0.03] border border-[#00703C]/10 rounded-[16px] p-5 flex items-center justify-between mb-6 shadow-sm">
+        <div className="bg-gradient-to-r from-[#00703C] to-[#005C32] rounded-[16px] p-5 flex items-center justify-between mb-6 shadow-sm text-white">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-[#00703C]/10 flex items-center justify-center text-[#00703C]">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-              </svg>
+            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-[18px]">
+              ✨
             </div>
             <div>
-              <h3 className="text-[15px] font-semibold text-[#111827]">
-                AI Financial Insight
-              </h3>
-              <p className="text-[14px] text-[#4B5563] mt-0.5">
-                Namaa analyzed your financial profile and found a better banking option for you yielding 4.5%.
+              <div className="flex items-center gap-2">
+                <h3 className="text-[15px] font-semibold">
+                  توصية اليوم
+                </h3>
+                <span className="text-[11px] font-medium bg-white/20 px-2 py-0.5 rounded-full">مبني على تحليل معاملاتك الأخيرة</span>
+              </div>
+              <p className="text-[14px] text-white/90 mt-1">
+                وجد نماء فرصة لتوفير 420 ريال هذا الشهر بتحويل رصيدك إلى حساب التوفير المميز.
               </p>
             </div>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white border border-[#E5E7EB] rounded-lg text-[13px] font-medium text-[#111827] shadow-sm hover:bg-gray-50 transition-colors">
-            View Recommendation
+          <button className="flex items-center gap-2 px-4 py-2 bg-white border border-white/20 rounded-lg text-[13px] font-medium text-[#00703C] shadow-sm hover:bg-gray-50 transition-colors">
+            عرض التفاصيل
             <svg
               width="16"
               height="16"
@@ -68,6 +66,7 @@ export function Dashboard() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
+              className="rotate-180"
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
@@ -79,7 +78,7 @@ export function Dashboard() {
           {/* Health Score */}
           <div className="bg-white border border-[#F0F0F0] rounded-[16px] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] flex flex-col relative overflow-hidden">
             <div className="text-[14px] font-medium text-[#6B7280] mb-3">
-              Financial Health
+              مؤشر الصحة المالية
             </div>
             <div className="flex-1 flex flex-col items-center justify-center pt-2">
               <div className="relative w-32 h-16">
@@ -111,7 +110,7 @@ export function Dashboard() {
                 </div>
               </div>
               <span className="text-[12px] font-medium text-[#00703C] mt-4 bg-[#00703C]/10 px-2.5 py-1 rounded-full">
-                Good Standing
+                وضع جيد
               </span>
             </div>
           </div>
@@ -136,14 +135,14 @@ export function Dashboard() {
                 </svg>
               </div>
               <div className="text-[14px] font-medium text-[#6B7280]">
-                Monthly Spending
+                الإنفاق الشهري
               </div>
             </div>
             <div className="text-[26px] font-bold text-[#111827] mb-2 tracking-tight">
-              SAR 4,230
+              4,230 ريال
             </div>
             <div className="flex items-center gap-2 text-[13px] mt-auto">
-              <span className="text-[#00703C] font-medium bg-[#00703C]/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+              <span className="text-[#00703C] font-medium bg-[#00703C]/10 px-1.5 py-0.5 rounded flex items-center gap-0.5" dir="ltr">
                 <svg
                   width="12"
                   height="12"
@@ -158,7 +157,7 @@ export function Dashboard() {
                 </svg>
                 12.5%
               </span>
-              <span className="text-gray-400">vs last month</span>
+              <span className="text-gray-400">مقارنة بالشهر الماضي</span>
             </div>
           </div>
 
@@ -182,14 +181,14 @@ export function Dashboard() {
                 </svg>
               </div>
               <div className="text-[14px] font-medium text-[#6B7280]">
-                Total Savings
+                المدخرات
               </div>
             </div>
             <div className="text-[26px] font-bold text-[#111827] mb-2 tracking-tight">
-              SAR 12,800
+              12,800 ريال
             </div>
             <div className="flex items-center gap-2 text-[13px] mt-auto">
-              <span className="text-[#00703C] font-medium bg-[#00703C]/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+              <span className="text-[#00703C] font-medium bg-[#00703C]/10 px-1.5 py-0.5 rounded flex items-center gap-0.5" dir="ltr">
                 <svg
                   width="12"
                   height="12"
@@ -204,7 +203,7 @@ export function Dashboard() {
                 </svg>
                 4.2%
               </span>
-              <span className="text-gray-400">vs last month</span>
+              <span className="text-gray-400">مقارنة بالشهر الماضي</span>
             </div>
           </div>
 
@@ -229,14 +228,14 @@ export function Dashboard() {
                 </svg>
               </div>
               <div className="text-[14px] font-medium text-[#6B7280]">
-                Upcoming
+                المدفوعات القادمة
               </div>
             </div>
             <div className="text-[26px] font-bold text-[#111827] mb-2 tracking-tight">
               3
             </div>
             <div className="flex items-center gap-2 text-[13px] mt-auto">
-              <span className="text-gray-500">Payments due this week</span>
+              <span className="text-gray-500">مدفوعات مستحقة هذا الأسبوع</span>
             </div>
           </div>
         </div>
@@ -245,7 +244,7 @@ export function Dashboard() {
         <div className="flex gap-5 mb-6">
           {[
             {
-              label: "Transfer",
+              label: "تحويل",
               icon: (
                 <svg
                   width="24"
@@ -265,7 +264,7 @@ export function Dashboard() {
               ),
             },
             {
-              label: "Pay Bills",
+              label: "دفع الفواتير",
               icon: (
                 <svg
                   width="24"
@@ -286,7 +285,7 @@ export function Dashboard() {
               ),
             },
             {
-              label: "Invest",
+              label: "استثمار",
               icon: (
                 <svg
                   width="24"
@@ -304,7 +303,7 @@ export function Dashboard() {
               ),
             },
             {
-              label: "Financing",
+              label: "تمويل",
               icon: (
                 <svg
                   width="24"
@@ -322,7 +321,7 @@ export function Dashboard() {
               ),
             },
             {
-              label: "Cards",
+              label: "بطاقاتي",
               icon: (
                 <svg
                   width="24"
@@ -360,14 +359,14 @@ export function Dashboard() {
           <div className="col-span-7 bg-white border border-[#F0F0F0] rounded-[16px] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] flex flex-col">
             <div className="flex justify-between items-center mb-8">
               <h3 className="text-[16px] font-semibold text-[#111827]">
-                Financial Snapshot
+                إنفاق الأشهر الستة الماضية
               </h3>
               <div className="flex items-center gap-1 text-[13px] font-medium bg-gray-50 p-1 rounded-lg">
                 <button className="px-3 py-1 bg-white text-[#00703C] rounded-md shadow-sm">
-                  Spending
+                  الإنفاق
                 </button>
                 <button className="px-3 py-1 text-gray-500 hover:text-gray-700">
-                  Income
+                  الدخل
                 </button>
               </div>
             </div>
@@ -446,12 +445,12 @@ export function Dashboard() {
 
               {/* X-axis labels */}
               <div className="flex justify-between text-[12px] text-[#9CA3AF] font-medium mt-4">
-                <span>May</span>
-                <span>Jun</span>
-                <span>Jul</span>
-                <span>Aug</span>
-                <span>Sep</span>
-                <span>Oct</span>
+                <span>مايو</span>
+                <span>يونيو</span>
+                <span>يوليو</span>
+                <span>أغسطس</span>
+                <span>سبتمبر</span>
+                <span>أكتوبر</span>
               </div>
             </div>
           </div>
@@ -460,19 +459,19 @@ export function Dashboard() {
           <div className="col-span-5 bg-white border border-[#F0F0F0] rounded-[16px] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] flex flex-col">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-[16px] font-semibold text-[#111827]">
-                Recent Activity
+                آخر المعاملات
               </h3>
               <button className="text-[13px] font-medium text-[#00703C] hover:underline">
-                View All
+                عرض الكل
               </button>
             </div>
             <div className="flex flex-col gap-5">
               {[
                 {
-                  title: "Panda Supermarket",
-                  category: "Groceries",
-                  date: "Today, 14:30",
-                  amount: "- SAR 450.00",
+                  title: "سوبرماركت بنده",
+                  category: "بقالة",
+                  date: "اليوم، 14:30",
+                  amount: "- 450.00 ريال",
                   iconBg: "bg-orange-50",
                   iconColor: "text-orange-500",
                   icon: (
@@ -493,10 +492,10 @@ export function Dashboard() {
                   ),
                 },
                 {
-                  title: "Alinma Salary Deposit",
-                  category: "Income",
-                  date: "Yesterday",
-                  amount: "+ SAR 18,500.00",
+                  title: "إيداع راتب الأهلي",
+                  category: "دخل",
+                  date: "أمس",
+                  amount: "+ 18,500.00 ريال",
                   iconBg: "bg-[#00703C]/10",
                   iconColor: "text-[#00703C]",
                   positive: true,
@@ -518,10 +517,10 @@ export function Dashboard() {
                   ),
                 },
                 {
-                  title: "STC Mobile Bill",
-                  category: "Utilities",
-                  date: "Oct 22",
-                  amount: "- SAR 230.50",
+                  title: "فاتورة جوال STC",
+                  category: "فواتير",
+                  date: "22 أكتوبر",
+                  amount: "- 230.50 ريال",
                   iconBg: "bg-purple-50",
                   iconColor: "text-purple-500",
                   icon: (
@@ -541,10 +540,10 @@ export function Dashboard() {
                   ),
                 },
                 {
-                  title: "Transfer to Khalid",
-                  category: "Transfer",
-                  date: "Oct 20",
-                  amount: "- SAR 1,200.00",
+                  title: "تحويل إلى خالد",
+                  category: "تحويل",
+                  date: "20 أكتوبر",
+                  amount: "- 1,200.00 ريال",
                   iconBg: "bg-blue-50",
                   iconColor: "text-blue-500",
                   icon: (
@@ -566,10 +565,10 @@ export function Dashboard() {
                   ),
                 },
                 {
-                  title: "Uber Rides",
-                  category: "Transport",
-                  date: "Oct 19",
-                  amount: "- SAR 85.00",
+                  title: "مشاوير أوبر",
+                  category: "مواصلات",
+                  date: "19 أكتوبر",
+                  amount: "- 85.00 ريال",
                   iconBg: "bg-gray-100",
                   iconColor: "text-gray-600",
                   icon: (
@@ -610,6 +609,7 @@ export function Dashboard() {
                     className={`text-[14px] font-semibold ${
                       item.positive ? "text-[#00703C]" : "text-[#111827]"
                     }`}
+                    dir="ltr"
                   >
                     {item.amount}
                   </div>

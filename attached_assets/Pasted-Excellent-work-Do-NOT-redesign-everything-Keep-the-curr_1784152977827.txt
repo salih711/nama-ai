@@ -1,0 +1,189 @@
+Excellent work.
+
+Do NOT redesign everything.
+
+Keep the current layout, spacing, components and dashboard structure.
+
+I only want to improve the product so it feels like an official AI product from Alinma Bank instead of a generic SaaS dashboard.
+
+=========================
+MAIN GOAL
+=========================
+
+The product must immediately communicate:
+
+"This is Alinma Bank's AI Financial Agent."
+
+Not just another financial dashboard.
+
+=========================
+LANGUAGE
+=========================
+
+Convert the entire UI to Arabic.
+
+RTL Layout.
+
+Use Arabic typography.
+
+Examples:
+
+Dashboard → الرئيسية
+
+Financial Health → مؤشر الصحة المالية
+
+Recommendation → التوصية
+
+Compatibility Score → درجة التوافق
+
+Reports → التقارير
+
+Cards → البطاقات
+
+Financing → التمويل
+
+Investments → الاستثمار
+
+Settings → الإعدادات
+
+=========================
+BRANDING
+=========================
+
+Strengthen Alinma identity.
+
+Use Alinma-inspired colors.
+
+Keep the interface clean and premium.
+
+Avoid looking like Stripe, Brex or generic SaaS products.
+
+The experience should feel like a future version of Alinma Bank.
+
+=========================
+HOME PAGE
+=========================
+
+Replace the generic welcome message.
+
+Instead show:
+
+مرحباً صالح 👋
+
+راجع نماء وضعك المالي اليوم، ولديه توصيات جديدة لك.
+
+At the top add a large AI Recommendation Card.
+
+Example:
+
+✨ توصية اليوم
+
+"وجد نماء فرصة لتوفير 420 ريال هذا الشهر."
+
+Button:
+
+عرض التفاصيل
+
+=========================
+AI PERSONALITY
+=========================
+
+Namaa is NOT a chatbot.
+
+Namaa is an intelligent financial agent.
+
+Every recommendation must explain WHY.
+
+Example:
+
+تم اختيار هذه البطاقة لأن:
+
+• تتناسب مع نمط إنفاقك.
+
+• تمنح استرداداً نقدياً أعلى.
+
+• تقلل رسومك السنوية.
+
+=========================
+FINANCIAL HEALTH
+=========================
+
+Make this page the hero of the project.
+
+Include:
+
+• مؤشر الصحة المالية
+
+• الإنفاق
+
+• الادخار
+
+• الالتزامات
+
+• الاستثمار
+
+Use attractive charts and visual indicators.
+
+=========================
+EXPLAINABLE AI
+=========================
+
+Add a new card called:
+
+كيف اتخذ نماء هذا القرار؟
+
+Show:
+
+✓ تحليل الدخل
+
+✓ تحليل المعاملات
+
+✓ تحليل الالتزامات
+
+✓ مقارنة منتجات البنك
+
+✓ اختيار أفضل منتج
+
+At the bottom show:
+
+درجة الثقة: 94%
+
+=========================
+RECOMMENDATION PAGE
+=========================
+
+Every recommendation should include:
+
+درجة التوافق
+
+سبب الترشيح
+
+الفوائد
+
+المخاطر المحتملة
+
+الخطوة التالية
+
+=========================
+DESIGN
+=========================
+
+Use more white space.
+
+Reduce sidebar width slightly.
+
+Improve hierarchy.
+
+Increase premium feeling.
+
+Keep everything elegant.
+
+=========================
+IMPORTANT
+=========================
+
+Do NOT start coding yet.
+
+Only update the UI mockups.
+
+I will review the new design before implementation.

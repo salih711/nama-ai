@@ -1,35 +1,35 @@
 import React from 'react';
 import { AppLayout } from "./_shared/AppLayout";
-import { CheckCircle2, ChevronRight, Sparkles, Building2, Car, GraduationCap, Home } from 'lucide-react';
+import { CheckCircle2, ChevronLeft, Sparkles, Building2, Car, GraduationCap, Home } from 'lucide-react';
 
 export function Financing() {
   return (
     <AppLayout activePage="financing">
-      <div className="max-w-6xl mx-auto px-6 py-8 space-y-8">
+      <div className="max-w-6xl mx-auto px-6 py-8 space-y-8" style={{ fontFamily: "'Tajawal', 'Cairo', sans-serif" }}>
         <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">My Financing</h1>
-            <p className="text-[14px] text-gray-500 mt-1.5">Manage your active financing and explore new opportunities.</p>
+            <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">تمويلاتي</h1>
+            <p className="text-[14px] text-gray-500 mt-1.5">أدر تمويلاتك النشطة واستكشف فرصاً جديدة.</p>
           </div>
           <button className="text-[13px] font-medium text-white bg-[#00703C] hover:bg-[#005e32] transition-colors px-4 py-2.5 rounded-lg shadow-sm">
-            Make Early Payment
+            سداد مبكر
           </button>
         </header>
 
         {/* AI Insight Card */}
         <div className="bg-gradient-to-r from-[#00703C]/5 to-transparent border border-[#00703C]/10 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-[#00703C]/[0.03] rounded-bl-full -mr-16 -mt-16 pointer-events-none" />
+          <div className="absolute top-0 left-0 w-48 h-48 bg-[#00703C]/[0.03] rounded-br-full -ml-16 -mt-16 pointer-events-none" />
           <div className="w-11 h-11 rounded-full bg-[#00703C]/10 flex items-center justify-center shrink-0">
             <Sparkles className="w-5 h-5 text-[#00703C]" />
           </div>
           <div className="flex-1">
-            <h3 className="text-[15px] font-semibold text-gray-900">Additional Financing Available</h3>
+            <h3 className="text-[15px] font-semibold text-gray-900">تمويل إضافي متاح</h3>
             <p className="text-[13.5px] text-gray-600 mt-1 leading-relaxed">
-              Based on your current income and excellent repayment history, you qualify for an additional <strong className="text-gray-900 font-semibold">SAR 150,000</strong> with preferential rates.
+              بناءً على دخلك، يمكنك الحصول على تمويل إضافي يصل إلى <strong className="text-gray-900 font-semibold">150,000 ريال</strong>
             </p>
           </div>
           <button className="shrink-0 text-[13px] font-medium text-[#00703C] bg-white border border-[#00703C]/20 hover:bg-gray-50 transition-colors px-4 py-2 rounded-lg shadow-sm">
-            Explore Options
+            استكشف الخيارات
           </button>
         </div>
 
@@ -37,7 +37,7 @@ export function Financing() {
           {/* Left Column: Active Financing */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-2xl p-6 lg:p-8 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] relative overflow-hidden">
-              <div className="absolute right-0 top-0 w-32 h-32 bg-gray-50/50 rounded-bl-[100px] -z-10"></div>
+              <div className="absolute left-0 top-0 w-32 h-32 bg-gray-50/50 rounded-br-[100px] -z-10"></div>
               
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div className="flex items-center gap-4">
@@ -45,19 +45,19 @@ export function Financing() {
                     <Home className="w-7 h-7 text-gray-700" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-semibold text-gray-900 tracking-tight">Home Financing</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 tracking-tight">تمويل عقاري</h2>
                     <div className="flex items-center gap-2.5 mt-1.5">
                       <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100/50">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_4px_rgba(16,185,129,0.5)]"></span> Active
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_4px_rgba(16,185,129,0.5)]"></span> نشط
                       </span>
-                      <span className="text-[13px] text-gray-500 font-medium">Contract #492810482</span>
+                      <span className="text-[13px] text-gray-500 font-medium">عقد #492810482</span>
                     </div>
                   </div>
                 </div>
-                <div className="sm:text-right">
-                  <div className="text-[12px] text-gray-500 font-medium tracking-wide uppercase mb-1">Monthly Installment</div>
-                  <div className="text-2xl font-bold text-gray-900 tracking-tight">SAR 4,200</div>
-                  <div className="text-[12px] text-gray-400 mt-1 font-medium">Next payment: <span className="text-gray-600">Oct 25, 2023</span></div>
+                <div className="sm:text-left">
+                  <div className="text-[12px] text-gray-500 font-medium tracking-wide mb-1">القسط الشهري</div>
+                  <div className="text-2xl font-bold text-gray-900 tracking-tight">4,200 ريال</div>
+                  <div className="text-[12px] text-gray-400 mt-1 font-medium">الدفعة القادمة: <span className="text-gray-600">25 أكتوبر 2023</span></div>
                 </div>
               </div>
 
@@ -65,26 +65,26 @@ export function Financing() {
                 <div className="flex flex-col justify-center space-y-6">
                   <div>
                     <div className="flex justify-between text-[13px] mb-2.5">
-                      <span className="text-gray-500 font-medium">Repayment Progress</span>
-                      <span className="font-bold text-gray-900">27% Paid</span>
+                      <span className="text-gray-500 font-medium">نسبة السداد</span>
+                      <span className="font-bold text-gray-900">27%</span>
                     </div>
                     <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
                       <div className="h-full bg-[#00703C] rounded-full transition-all duration-1000 ease-out" style={{ width: '27%' }}></div>
                     </div>
                     <div className="flex justify-between text-[12px] text-gray-400 mt-2.5 font-medium">
-                      <span>SAR 230,000 paid</span>
-                      <span>SAR 620,000 remaining</span>
+                      <span>تم سداد 230,000 ريال</span>
+                      <span>المتبقي: 620,000 ريال</span>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-gray-50/80 rounded-xl p-3.5 border border-gray-100/50">
-                      <div className="text-[11px] text-gray-500 font-medium uppercase tracking-wider mb-1">Original Amount</div>
-                      <div className="text-[14px] font-bold text-gray-900">SAR 850,000</div>
+                      <div className="text-[11px] text-gray-500 font-medium mb-1">المبلغ الأصلي</div>
+                      <div className="text-[14px] font-bold text-gray-900">850,000 ريال</div>
                     </div>
                     <div className="bg-gray-50/80 rounded-xl p-3.5 border border-gray-100/50">
-                      <div className="text-[11px] text-gray-500 font-medium uppercase tracking-wider mb-1">Time Remaining</div>
-                      <div className="text-[14px] font-bold text-gray-900">7 Years</div>
+                      <div className="text-[11px] text-gray-500 font-medium mb-1">المدة المتبقية</div>
+                      <div className="text-[14px] font-bold text-gray-900">7 سنوات</div>
                     </div>
                   </div>
                 </div>
@@ -111,12 +111,6 @@ export function Financing() {
                         strokeWidth="3.5"
                         strokeLinecap="round"
                       />
-                      {/* Profit: 30% (so length is 95 to cover 5+30=35 but we draw backwards? 
-                          Wait, simple way: stack them. 
-                          1. 100% total (all colored)
-                          2. Profit+Principal (95%)
-                          3. Principal only (65%)
-                      */}
                       <path
                         className="text-[#00703C]/20 transition-all duration-1000"
                         strokeDasharray="95, 100"
@@ -137,31 +131,31 @@ export function Financing() {
                       />
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-widest mt-0.5">Breakdown</span>
+                      <span className="text-[10px] text-gray-400 font-semibold mt-0.5">التفاصيل</span>
                     </div>
                   </div>
                   
                   <div className="flex-1 space-y-3.5 max-w-[140px]">
-                    <div className="flex justify-between items-center text-[13px]">
+                    <div className="flex justify-between items-center text-[13px] gap-4">
                       <div className="flex items-center gap-2">
                         <div className="w-2.5 h-2.5 rounded-full bg-[#00703C] shadow-sm"></div>
-                        <span className="text-gray-600 font-medium">Principal</span>
+                        <span className="text-gray-600 font-medium">الأصل</span>
                       </div>
-                      <span className="font-bold text-gray-900">SAR 2,730</span>
+                      <span className="font-bold text-gray-900">2,730 ريال</span>
                     </div>
-                    <div className="flex justify-between items-center text-[13px]">
+                    <div className="flex justify-between items-center text-[13px] gap-4">
                       <div className="flex items-center gap-2">
                         <div className="w-2.5 h-2.5 rounded-full bg-[#00703C]/20 shadow-sm"></div>
-                        <span className="text-gray-600 font-medium">Profit</span>
+                        <span className="text-gray-600 font-medium">الربح</span>
                       </div>
-                      <span className="font-bold text-gray-900">SAR 1,260</span>
+                      <span className="font-bold text-gray-900">1,260 ريال</span>
                     </div>
-                    <div className="flex justify-between items-center text-[13px]">
+                    <div className="flex justify-between items-center text-[13px] gap-4">
                       <div className="flex items-center gap-2">
                         <div className="w-2.5 h-2.5 rounded-full bg-gray-200 shadow-sm"></div>
-                        <span className="text-gray-600 font-medium">Insurance</span>
+                        <span className="text-gray-600 font-medium">التأمين</span>
                       </div>
-                      <span className="font-bold text-gray-900">SAR 210</span>
+                      <span className="font-bold text-gray-900">210 ريال</span>
                     </div>
                   </div>
                 </div>
@@ -171,18 +165,18 @@ export function Financing() {
             {/* Upcoming Payments Schedule */}
             <div className="bg-white rounded-2xl p-6 lg:p-8 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)]">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-[16px] font-semibold text-gray-900">Payment Schedule</h3>
-                <button className="text-[13px] font-semibold text-[#00703C] hover:text-[#005e32] transition-colors">View Complete History</button>
+                <h3 className="text-[16px] font-semibold text-gray-900">جدول الأقساط القادمة</h3>
+                <button className="text-[13px] font-semibold text-[#00703C] hover:text-[#005e32] transition-colors">عرض السجل الكامل</button>
               </div>
 
               <div className="relative">
-                <div className="absolute top-4 left-[15px] bottom-4 w-px bg-gray-100"></div>
+                <div className="absolute top-4 right-[15px] bottom-4 w-px bg-gray-100"></div>
                 <div className="space-y-1">
                   {[
-                    { date: 'Oct 25, 2023', status: 'upcoming', amount: '4,200', active: true },
-                    { date: 'Nov 25, 2023', status: 'upcoming', amount: '4,200' },
-                    { date: 'Dec 25, 2023', status: 'upcoming', amount: '4,200' },
-                    { date: 'Sep 25, 2023', status: 'paid', amount: '4,200' },
+                    { date: '25 أكتوبر 2023', status: 'upcoming', amount: '4,200', active: true },
+                    { date: '25 نوفمبر 2023', status: 'upcoming', amount: '4,200' },
+                    { date: '25 ديسمبر 2023', status: 'upcoming', amount: '4,200' },
+                    { date: '25 سبتمبر 2023', status: 'paid', amount: '4,200' },
                   ].map((payment, i) => (
                     <div key={i} className="flex items-start gap-5 relative py-2.5 group">
                       <div className={`w-[32px] h-[32px] rounded-full flex items-center justify-center shrink-0 z-10 border-[3px] border-white shadow-sm ${
@@ -208,13 +202,13 @@ export function Financing() {
                           <div className={`text-[12.5px] mt-0.5 font-medium ${
                             payment.active ? 'text-[#00703C]/70' : 'text-gray-400'
                           }`}>
-                            {payment.status === 'paid' ? 'Paid successfully' : 'Scheduled deduction'}
+                            {payment.status === 'paid' ? 'تم السداد بنجاح' : 'خصم مجدول'}
                           </div>
                         </div>
                         <div className={`text-[14px] font-bold ${
                           payment.status === 'paid' ? 'text-gray-400' : 'text-gray-900'
                         }`}>
-                          SAR {payment.amount}
+                          {payment.amount} ريال
                         </div>
                       </div>
                     </div>
@@ -226,33 +220,33 @@ export function Financing() {
 
           {/* Right Column: Explore More */}
           <div className="space-y-5">
-            <h3 className="text-[15px] font-semibold text-gray-900 flex items-center gap-2.5 ml-1">
+            <h3 className="text-[15px] font-semibold text-gray-900 flex items-center gap-2.5 mr-1">
               <div className="w-1.5 h-4 bg-[#00703C] rounded-full"></div>
-              Explore More Financing
+              استكشف المزيد من التمويل
             </h3>
             
             <div className="space-y-4">
               {[
                 {
-                  title: 'Personal Financing',
+                  title: 'تمويل شخصي',
                   icon: <Building2 className="w-5 h-5" />,
-                  rate: 'from 2.49%',
-                  amount: 'Up to SAR 1.5M',
-                  est: 'SAR 1,800/mo'
+                  rate: 'من 2.49%',
+                  amount: 'حتى 1.5 مليون ريال',
+                  est: '1,800 ريال/شهر'
                 },
                 {
-                  title: 'Car Financing',
+                  title: 'تمويل سيارة',
                   icon: <Car className="w-5 h-5" />,
-                  rate: 'from 3.10%',
-                  amount: 'Up to SAR 500K',
-                  est: 'SAR 1,200/mo'
+                  rate: 'من 3.10%',
+                  amount: 'حتى 500 ألف ريال',
+                  est: '1,200 ريال/شهر'
                 },
                 {
-                  title: 'Education Financing',
+                  title: 'تمويل تعليمي',
                   icon: <GraduationCap className="w-5 h-5" />,
-                  rate: '0% Profit Margin',
-                  amount: 'Up to SAR 200K',
-                  est: 'SAR 800/mo'
+                  rate: 'هامش ربح 0%',
+                  amount: 'حتى 200 ألف ريال',
+                  est: '800 ريال/شهر'
                 }
               ].map((prod, i) => (
                 <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-[#00703C]/30 hover:shadow-md transition-all cursor-pointer group relative overflow-hidden">
@@ -269,16 +263,16 @@ export function Financing() {
                         {prod.rate}
                       </div>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-[#00703C] transition-colors mt-1" />
+                    <ChevronLeft className="w-4 h-4 text-gray-300 group-hover:text-[#00703C] transition-colors mt-1" />
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-50 relative">
                     <div>
-                      <div className="text-[11px] text-gray-400 font-medium mb-1 uppercase tracking-wider">Max Amount</div>
+                      <div className="text-[11px] text-gray-400 font-medium mb-1 tracking-wider">الحد الأقصى</div>
                       <div className="text-[13px] font-bold text-gray-900">{prod.amount}</div>
                     </div>
                     <div>
-                      <div className="text-[11px] text-gray-400 font-medium mb-1 uppercase tracking-wider">Est. Payment</div>
+                      <div className="text-[11px] text-gray-400 font-medium mb-1 tracking-wider">القسط المتوقع</div>
                       <div className="text-[13px] font-bold text-gray-900">{prod.est}</div>
                     </div>
                   </div>
