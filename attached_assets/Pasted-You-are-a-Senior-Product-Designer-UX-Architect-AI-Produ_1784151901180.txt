@@ -1,0 +1,215 @@
+You are a Senior Product Designer, UX Architect, AI Product Manager and Full Stack Engineer.
+
+Your mission is to build a production-quality Web MVP for a Hackathon.
+
+Project Name:
+نماء (Namaa)
+
+Project Description:
+
+Namaa is an AI Financial Agent for Alinma Bank.
+
+It is NOT a chatbot.
+
+It is NOT a banking website.
+
+It is an intelligent financial assistant that helps customers make better financial decisions.
+
+====================================================
+
+IMPORTANT
+
+Build a RESPONSIVE WEB APPLICATION.
+
+Desktop First.
+
+Tablet Friendly.
+
+Mobile Responsive.
+
+Do NOT build a mobile application.
+
+====================================================
+
+Design Style
+
+The design should feel like:
+
+Alinma Bank
+Apple
+Stripe
+Linear
+
+Premium.
+
+Minimal.
+
+Professional.
+
+Trustworthy.
+
+White space.
+
+Soft shadows.
+
+Modern cards.
+
+Green identity inspired by Alinma.
+
+====================================================
+
+Navigation
+
+Left Sidebar
+
+• Dashboard
+• AI Agent
+• Cards
+• Financing
+• Investments
+• Financial Health
+• Reports
+• Settings
+
+====================================================
+
+Dashboard
+
+Show:
+
+Welcome back, Saleh
+
+Financial Health Score
+
+Monthly Spending
+
+Savings
+
+Upcoming Payments
+
+AI Recommendation Card
+
+Recent Activity
+
+Quick Actions
+
+====================================================
+
+The AI Recommendation Card should say something like:
+
+"Namaa analyzed your financial profile and found a better banking option."
+
+Button:
+
+View Recommendation
+
+====================================================
+
+AI Agent
+
+This is NOT a chat.
+
+Use a guided experience.
+
+The AI asks ONE question at a time.
+
+Example:
+
+What would you like to achieve today?
+
+○ Find the best credit card
+
+○ Personal Financing
+
+○ Investment
+
+○ Saving
+
+○ Banking Services
+
+After each answer,
+the AI decides the next question.
+
+====================================================
+
+Recommendation Page
+
+Show:
+
+Recommended Product
+
+Compatibility Score
+
+Why Namaa selected this
+
+Advantages
+
+Possible Risks
+
+Recommended Next Step
+
+Confidence Score
+
+====================================================
+
+Financial Health Page
+
+Display:
+
+Financial Health Score
+
+Income
+
+Expenses
+
+Savings Ratio
+
+Debt Ratio
+
+Spending Categories
+
+Charts
+
+AI Insights
+
+====================================================
+
+Reports
+
+Monthly Report
+
+Spending Analysis
+
+Financial Goals
+
+AI Suggestions
+
+====================================================
+
+General Rules
+
+Do NOT create a chatbot.
+
+Do NOT use messaging bubbles.
+
+Use dashboards.
+
+Cards.
+
+Charts.
+
+Progress Indicators.
+
+Modern banking UX.
+
+====================================================
+
+FIRST STEP
+
+Before writing any code,
+
+Create complete UI mockups for all pages.
+
+Wait for my approval.
+
+Only after approval start implementation.
