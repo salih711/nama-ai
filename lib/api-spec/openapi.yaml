@@ -3,20 +3,36 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Namaa AI Financial Agent API for Alinma Bank
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: dashboard
+    description: Dashboard data
+  - name: ai-agent
+    description: AI guided financial agent
+  - name: recommendations
+    description: AI product recommendations
+  - name: cards
+    description: Banking cards
+  - name: financing
+    description: Financing products and active loans
+  - name: investments
+    description: Investment portfolio
+  - name: financial-health
+    description: Financial health score and breakdown
+  - name: reports
+    description: Financial reports and analytics
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +40,747 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [dashboard]
+      summary: Get dashboard summary data
+      responses:
+        "200":
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+
+  /ai-agent/flow:
+    get:
+      operationId: getAiAgentFlow
+      tags: [ai-agent]
+      summary: Start or resume AI agent guided flow
+      responses:
+        "200":
+          description: Current question in the flow
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentQuestion"
+
+  /ai-agent/answer:
+    post:
+      operationId: submitAgentAnswer
+      tags: [ai-agent]
+      summary: Submit answer to current AI agent question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgentAnswerInput"
+      responses:
+        "200":
+          description: Next question or final result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentResponse"
+
+  /recommendations:
+    get:
+      operationId: getRecommendations
+      tags: [recommendations]
+      summary: List AI recommendations
+      responses:
+        "200":
+          description: List of recommendations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecommendationSummary"
+
+  /recommendations/{id}:
+    get:
+      operationId: getRecommendation
+      tags: [recommendations]
+      summary: Get full recommendation detail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Full recommendation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recommendation"
+        "404":
+          description: Not found
+
+  /cards:
+    get:
+      operationId: getCards
+      tags: [cards]
+      summary: Get user banking cards
+      responses:
+        "200":
+          description: Cards list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Card"
+
+  /financing:
+    get:
+      operationId: getFinancing
+      tags: [financing]
+      summary: Get financing overview
+      responses:
+        "200":
+          description: Financing data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinancingOverview"
+
+  /investments:
+    get:
+      operationId: getInvestments
+      tags: [investments]
+      summary: Get investment portfolio
+      responses:
+        "200":
+          description: Investment portfolio
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvestmentPortfolio"
+
+  /financial-health:
+    get:
+      operationId: getFinancialHealth
+      tags: [financial-health]
+      summary: Get financial health score and breakdown
+      responses:
+        "200":
+          description: Financial health data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinancialHealth"
+
+  /reports:
+    get:
+      operationId: getReports
+      tags: [reports]
+      summary: Get financial reports
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            default: "2026-07"
+      responses:
+        "200":
+          description: Reports data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Report"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    # ─── Dashboard ───────────────────────────────────────────────
+    Dashboard:
+      type: object
+      required: [user, healthScore, metrics, aiRecommendation, recentTransactions, spendingChart]
+      properties:
+        user:
+          $ref: "#/components/schemas/UserProfile"
+        healthScore:
+          $ref: "#/components/schemas/HealthScoreSummary"
+        metrics:
+          $ref: "#/components/schemas/DashboardMetrics"
+        aiRecommendation:
+          $ref: "#/components/schemas/AiRecommendationCard"
+        recentTransactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Transaction"
+        spendingChart:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlyAmount"
+
+    UserProfile:
+      type: object
+      required: [name, accountType]
+      properties:
+        name:
+          type: string
+        accountType:
+          type: string
+
+    HealthScoreSummary:
+      type: object
+      required: [score, label, trend]
+      properties:
+        score:
+          type: integer
+        label:
+          type: string
+        trend:
+          type: number
+
+    DashboardMetrics:
+      type: object
+      required: [monthlySpending, savings, upcomingPaymentsCount, upcomingPaymentsAmount]
+      properties:
+        monthlySpending:
+          type: number
+        savings:
+          type: number
+        upcomingPaymentsCount:
+          type: integer
+        upcomingPaymentsAmount:
+          type: number
+
+    AiRecommendationCard:
+      type: object
+      required: [id, title, summary, savingsAmount, type, confidenceScore]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        savingsAmount:
+          type: number
+        type:
+          type: string
+        confidenceScore:
+          type: integer
+
+    Transaction:
+      type: object
+      required: [id, merchant, amount, date, category, type]
+      properties:
+        id:
+          type: string
+        merchant:
+          type: string
+        amount:
+          type: number
+        date:
+          type: string
+        category:
+          type: string
+        type:
+          type: string
+          enum: [credit, debit]
+
+    MonthlyAmount:
+      type: object
+      required: [month, amount]
+      properties:
+        month:
+          type: string
+        amount:
+          type: number
+
+    # ─── AI Agent ────────────────────────────────────────────────
+    AgentQuestion:
+      type: object
+      required: [stepNumber, totalSteps, question, options, profileSoFar]
+      properties:
+        stepNumber:
+          type: integer
+        totalSteps:
+          type: integer
+        question:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: "#/components/schemas/AgentOption"
+        profileSoFar:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProfileItem"
+
+    AgentOption:
+      type: object
+      required: [key, label, description]
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        description:
+          type: string
+
+    ProfileItem:
+      type: object
+      required: [label, value, resolved]
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+        resolved:
+          type: boolean
+
+    AgentAnswerInput:
+      type: object
+      required: [stepNumber, selectedKey]
+      properties:
+        stepNumber:
+          type: integer
+        selectedKey:
+          type: string
+
+    AgentResponse:
+      type: object
+      required: [done]
+      properties:
+        done:
+          type: boolean
+        nextQuestion:
+          $ref: "#/components/schemas/AgentQuestion"
+        recommendationId:
+          type: ["string", "null"]
+
+    # ─── Recommendations ─────────────────────────────────────────
+    RecommendationSummary:
+      type: object
+      required: [id, productName, productType, compatibilityScore, summary]
+      properties:
+        id:
+          type: string
+        productName:
+          type: string
+        productType:
+          type: string
+        compatibilityScore:
+          type: integer
+        summary:
+          type: string
+
+    Recommendation:
+      type: object
+      required: [id, productName, productType, compatibilityScore, confidenceScore, summary, reasons, advantages, risks, nextStep, explainableAI]
+      properties:
+        id:
+          type: string
+        productName:
+          type: string
+        productType:
+          type: string
+        compatibilityScore:
+          type: integer
+        confidenceScore:
+          type: integer
+        summary:
+          type: string
+        reasons:
+          type: array
+          items:
+            $ref: "#/components/schemas/RecommendationReason"
+        advantages:
+          type: array
+          items:
+            type: string
+        risks:
+          type: array
+          items:
+            type: string
+        nextStep:
+          $ref: "#/components/schemas/NextStep"
+        explainableAI:
+          $ref: "#/components/schemas/ExplainableAI"
+
+    RecommendationReason:
+      type: object
+      required: [title, description]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+
+    NextStep:
+      type: object
+      required: [primary, secondary]
+      properties:
+        primary:
+          type: string
+        secondary:
+          type: string
+
+    ExplainableAI:
+      type: object
+      required: [steps, confidenceScore]
+      properties:
+        steps:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExplainStep"
+        confidenceScore:
+          type: integer
+
+    ExplainStep:
+      type: object
+      required: [label, done]
+      properties:
+        label:
+          type: string
+        done:
+          type: boolean
+
+    # ─── Cards ───────────────────────────────────────────────────
+    Card:
+      type: object
+      required: [id, name, type, lastFour, expiryDate, creditLimit, availableBalance, outstanding, utilizationPercent, status, transactions, pointsEarned]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        lastFour:
+          type: string
+        expiryDate:
+          type: string
+        creditLimit:
+          type: number
+        availableBalance:
+          type: number
+        outstanding:
+          type: number
+        utilizationPercent:
+          type: integer
+        status:
+          type: string
+          enum: [active, frozen, blocked]
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Transaction"
+        pointsEarned:
+          type: integer
+
+    # ─── Financing ───────────────────────────────────────────────
+    FinancingOverview:
+      type: object
+      required: [activeLoans, availableProducts, aiInsight]
+      properties:
+        activeLoans:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActiveLoan"
+        availableProducts:
+          type: array
+          items:
+            $ref: "#/components/schemas/FinancingProduct"
+        aiInsight:
+          $ref: "#/components/schemas/FinancingInsight"
+
+    ActiveLoan:
+      type: object
+      required: [id, type, originalAmount, remainingAmount, monthlyPayment, yearsRemaining, paidPercent, installmentBreakdown]
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        originalAmount:
+          type: number
+        remainingAmount:
+          type: number
+        monthlyPayment:
+          type: number
+        yearsRemaining:
+          type: integer
+        paidPercent:
+          type: integer
+        installmentBreakdown:
+          $ref: "#/components/schemas/InstallmentBreakdown"
+
+    InstallmentBreakdown:
+      type: object
+      required: [principal, profit, insurance]
+      properties:
+        principal:
+          type: integer
+        profit:
+          type: integer
+        insurance:
+          type: integer
+
+    FinancingProduct:
+      type: object
+      required: [id, name, maxAmount, profitRate, estimatedMonthly]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        maxAmount:
+          type: number
+        profitRate:
+          type: number
+        estimatedMonthly:
+          type: number
+
+    FinancingInsight:
+      type: object
+      required: [text, additionalAmount]
+      properties:
+        text:
+          type: string
+        additionalAmount:
+          type: number
+
+    # ─── Investments ─────────────────────────────────────────────
+    InvestmentPortfolio:
+      type: object
+      required: [totalValue, dailyChange, dailyChangePercent, performanceChart, assetAllocation, holdings, metrics, aiInsight]
+      properties:
+        totalValue:
+          type: number
+        dailyChange:
+          type: number
+        dailyChangePercent:
+          type: number
+        performanceChart:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlyAmount"
+        assetAllocation:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssetSlice"
+        holdings:
+          type: array
+          items:
+            $ref: "#/components/schemas/Holding"
+        metrics:
+          $ref: "#/components/schemas/PortfolioMetrics"
+        aiInsight:
+          type: string
+
+    AssetSlice:
+      type: object
+      required: [label, percent, color]
+      properties:
+        label:
+          type: string
+        percent:
+          type: integer
+        color:
+          type: string
+
+    Holding:
+      type: object
+      required: [id, name, currentValue, gainLoss, gainLossPercent]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        currentValue:
+          type: number
+        gainLoss:
+          type: number
+        gainLossPercent:
+          type: number
+
+    PortfolioMetrics:
+      type: object
+      required: [totalReturn, annualizedReturn, unrealizedGain]
+      properties:
+        totalReturn:
+          type: number
+        annualizedReturn:
+          type: number
+        unrealizedGain:
+          type: number
+
+    # ─── Financial Health ────────────────────────────────────────
+    FinancialHealth:
+      type: object
+      required: [score, label, percentileBenchmark, subScores, income, expenses, savings, savingsRatio, savingsRatioLabel, debtRatio, debtRatioLabel, spendingCategories, monthlyTrend, aiInsights, explainableAI]
+      properties:
+        score:
+          type: integer
+        label:
+          type: string
+        percentileBenchmark:
+          type: integer
+        subScores:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubScore"
+        income:
+          type: number
+        expenses:
+          type: number
+        savings:
+          type: number
+        savingsRatio:
+          type: number
+        savingsRatioLabel:
+          type: string
+        debtRatio:
+          type: number
+        debtRatioLabel:
+          type: string
+        spendingCategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/SpendingCategory"
+        monthlyTrend:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+        aiInsights:
+          type: array
+          items:
+            type: string
+        explainableAI:
+          $ref: "#/components/schemas/HealthExplainableAI"
+
+    SubScore:
+      type: object
+      required: [label, score, maxScore, status]
+      properties:
+        label:
+          type: string
+        score:
+          type: integer
+        maxScore:
+          type: integer
+        status:
+          type: string
+          enum: [good, warning, danger]
+
+    SpendingCategory:
+      type: object
+      required: [label, percent, amount]
+      properties:
+        label:
+          type: string
+        percent:
+          type: integer
+        amount:
+          type: number
+
+    TrendPoint:
+      type: object
+      required: [month, score]
+      properties:
+        month:
+          type: string
+        score:
+          type: integer
+
+    HealthExplainableAI:
+      type: object
+      required: [factors]
+      properties:
+        factors:
+          type: array
+          items:
+            type: string
+
+    # ─── Reports ─────────────────────────────────────────────────
+    Report:
+      type: object
+      required: [period, income, expenses, netSavings, incomeVsLastMonth, expensesVsLastMonth, spendingByCategory, monthlyComparison, goals, aiSuggestions]
+      properties:
+        period:
+          type: string
+        income:
+          type: number
+        expenses:
+          type: number
+        netSavings:
+          type: number
+        incomeVsLastMonth:
+          type: number
+        expensesVsLastMonth:
+          type: number
+        spendingByCategory:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryReport"
+        monthlyComparison:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlyComparison"
+        goals:
+          type: array
+          items:
+            $ref: "#/components/schemas/FinancialGoal"
+        aiSuggestions:
+          type: array
+          items:
+            type: string
+
+    CategoryReport:
+      type: object
+      required: [category, amount, percent, budgetPercent, trend]
+      properties:
+        category:
+          type: string
+        amount:
+          type: number
+        percent:
+          type: number
+        budgetPercent:
+          type: number
+        trend:
+          type: string
+          enum: [up, down, stable]
+
+    MonthlyComparison:
+      type: object
+      required: [month, current, previous]
+      properties:
+        month:
+          type: string
+        current:
+          type: number
+        previous:
+          type: number
+
+    FinancialGoal:
+      type: object
+      required: [id, name, progress, target, current]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        progress:
+          type: integer
+        target:
+          type: number
+        current:
+          type: number
