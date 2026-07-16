@@ -1,4 +1,4 @@
-import { useGetAiAgentFlow, useSubmitAgentAnswer } from "@workspace/api-client-react";
+import { useSubmitAgentAnswer } from "@workspace/api-client-react";
 import type { AgentQuestion } from "@workspace/api-client-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
@@ -11,7 +11,7 @@ import {
   ScanLine, ShoppingBag, Wallet, Clock, Star,
   ChevronLeft, AlertCircle, TrendingDown, Globe,
   Plane, MapPin, DollarSign, Banknote, Lock,
-  FileText, CheckCircle2, Smartphone, Users,
+  FileText, CheckCircle2, Smartphone, Users, Landmark,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -95,7 +95,7 @@ const iconMap: Record<string, React.ElementType> = {
   timeline_short: Clock,
   timeline_mid: Clock,
   timeline_long: Target,
-  // Banking
+  // Banking (legacy)
   transfers: Zap,
   smart_accounts: PiggyBank,
   digital_experience: Smartphone,
@@ -107,6 +107,40 @@ const iconMap: Record<string, React.ElementType> = {
   daily: Activity,
   few_weekly: Clock,
   rarely: Target,
+  // health-report flow
+  wealth_growth: TrendingUp,
+  home_purchase: Home,
+  oblig_none: CheckCircle2,
+  oblig_light: Wallet,
+  oblig_medium: BarChart3,
+  oblig_heavy: AlertCircle,
+  save_disciplined: PiggyBank,
+  save_occasional: ShoppingBag,
+  save_rarely: TrendingDown,
+  // smart-recommendation flow
+  grow_wealth: TrendingUp,
+  reduce_debt: TrendingDown,
+  save_more: PiggyBank,
+  improve_credit: Star,
+  products_none: Wallet,
+  products_some: CreditCard,
+  products_many: Banknote,
+  // savings-planner flow
+  target_low: Wallet,
+  target_medium: Banknote,
+  target_high: TrendingUp,
+  // investment-advisor flow
+  horizon_short: Clock,
+  horizon_mid: Target,
+  horizon_long: Globe,
+  savings_none: Wallet,
+  savings_low: PiggyBank,
+  savings_high: TrendingUp,
+  // financing-advisor flow
+  employed: Building,
+  self_employed: Users,
+  business_owner: Landmark,
+  other: Activity,
 };
 
 // ─── Analysis Steps ───────────────────────────────────────────────────────────
@@ -1003,6 +1037,10 @@ export default function AiAgent() {
   const [, setLocation] = useLocation();
 
   const sessionId = useRef(makeSessionId()).current;
+  // Read ?service= once at mount; fall back to the generic recommendation flow
+  const serviceParam = useRef(
+    new URLSearchParams(window.location.search).get("service") ?? "smart-recommendation"
+  ).current;
 
   const [phase, setPhase] = useState<Phase>("welcome");
   const [started, setStarted] = useState(false);
@@ -1011,12 +1049,22 @@ export default function AiAgent() {
   const [report, setReport] = useState<AgentReport | null>(null);
   const [pendingKey, setPendingKey] = useState<string | null>(null);
 
-  // Pre-fetch eagerly so data is ready when user clicks "ابدأ مع نماء"
-  const { data: initialFlow, isLoading, error } = useGetAiAgentFlow();
+  // Eagerly fetch the first question (service-specific) so it is ready when
+  // the user clicks "ابدأ مع نماء" on the welcome screen.
+  const [initialFlow, setInitialFlow] = useState<AgentQuestion | null>(null);
+  const [isLoading, setIsLoading]     = useState(true);
+  const [flowError, setFlowError]     = useState(false);
+
+  useEffect(() => {
+    fetch(`/api/ai-agent/flow?service=${serviceParam}&sessionId=${sessionId}`)
+      .then((r) => { if (!r.ok) throw new Error("flow-fetch-failed"); return r.json(); })
+      .then((data: AgentQuestion) => { setInitialFlow(data); setIsLoading(false); })
+      .catch(() => { setFlowError(true); setIsLoading(false); });
+  }, []); // run once on mount; serviceParam and sessionId are stable refs
 
   const submitAnswer = useSubmitAgentAnswer();
 
-  // When API responds, load the first question and enter questioning phase
+  // When the API responds and the user has already clicked start, transition
   useEffect(() => {
     if (initialFlow && !currentQuestion && started) {
       setCurrentQuestion(initialFlow);
@@ -1026,12 +1074,11 @@ export default function AiAgent() {
 
   const handleStart = () => {
     setStarted(true);
-    // If data already cached, go straight to questioning
     if (initialFlow) {
       setCurrentQuestion(initialFlow);
       setPhase("questioning");
     }
-    // Otherwise the useEffect above will handle it when data arrives
+    // Otherwise the useEffect above handles it when the fetch resolves
   };
 
   const handleAnswer = (key: string) => {
@@ -1103,7 +1150,7 @@ export default function AiAgent() {
 
   // Loading spinner while API fetches after user clicks start
   const showLoader =
-    phase === "welcome" && started && (isLoading || (!currentQuestion && !error));
+    phase === "welcome" && started && (isLoading || (!currentQuestion && !flowError));
 
   return (
     <AnimatePresence mode="wait">
@@ -1118,7 +1165,7 @@ export default function AiAgent() {
               </div>
               <p className="text-muted-foreground font-medium animate-pulse">نماء يراجع ملفك المالي…</p>
             </div>
-          ) : error ? (
+          ) : flowError ? (
             <div className="max-w-3xl mx-auto px-6 py-16 text-center">
               <p className="text-destructive font-medium">تعذّر تحميل المستشار المالي. يرجى المحاولة مجدداً.</p>
             </div>
