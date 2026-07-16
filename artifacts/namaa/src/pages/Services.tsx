@@ -3,82 +3,104 @@ import { Link } from "wouter";
 import {
   FileBarChart2,
   Sparkles,
-  MessageSquare,
   PiggyBank,
-  PieChart,
   TrendingUp,
   Landmark,
-  CalendarDays,
-  Activity,
+  ArrowLeftRight,
+  Receipt,
+  CreditCard,
+  FileText,
   ChevronLeft,
   Brain,
+  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // ─── Service definitions ──────────────────────────────────────────────────────
-const SERVICES = [
+//
+//  type "ai"          → collects financial profile via /ai-agent assessment flow
+//  type "traditional" → opens the target page directly, no questions asked
+//
+const SERVICES: {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  href: string;
+  type: "ai" | "traditional";
+}[] = [
+  // ── AI-powered ────────────────────────────────────────────────────────────
   {
     icon: FileBarChart2,
     title: "تقرير الصحة المالية",
     description:
-      "تقرير مُولَّد بالذكاء الاصطناعي يُحلّل الدخل والإنفاق والمدخرات والالتزامات المالية.",
-    href: "/financial-health",
+      "تقرير مُولَّد بالذكاء الاصطناعي يُحلّل دخلك وإنفاقك ومدخراتك والتزاماتك لتقييم وضعك المالي الكامل.",
+    href: "/ai-agent",
+    type: "ai",
   },
   {
     icon: Sparkles,
     title: "توصية المنتج الذكية",
     description:
-      "نماء يقارن جميع المنتجات المالية ويوصي بالأفضل مع شرح مفصّل لكل سبب وكل رقم.",
+      "نماء يقارن جميع المنتجات المالية ويوصي بالأفضل لك مع شرح مفصّل لكل سبب وكل رقم.",
     href: "/ai-agent",
-  },
-  {
-    icon: MessageSquare,
-    title: "المساعد المالي الذكي",
-    description:
-      "اطرح أي سؤال مالي بلغة طبيعية واحصل على إجابات شخصية ومخصصة لوضعك الفعلي.",
-    href: "/ai-agent",
+    type: "ai",
   },
   {
     icon: PiggyBank,
-    title: "أهداف الادخار",
+    title: "مخطط الادخار الذكي",
     description:
-      "نماء يُنشئ خطط ادخار مخصصة بناءً على أهدافك وعادات إنفاقك والهامش الشهري المتاح.",
-    href: "/financial-health",
-  },
-  {
-    icon: PieChart,
-    title: "تحليلات الإنفاق",
-    description:
-      "تصنيف تلقائي لجميع المصروفات مع رؤى ذكية وفرص محددة لتوفير المال كل شهر.",
-    href: "/reports",
+      "نماء يُنشئ خطة ادخار مخصصة بناءً على أهدافك وعادات إنفاقك والهامش الشهري المتاح لديك.",
+    href: "/ai-agent",
+    type: "ai",
   },
   {
     icon: TrendingUp,
-    title: "فرص الاستثمار",
+    title: "مستشار الاستثمار",
     description:
-      "نماء يقترح منتجات استثمارية مناسبة وفقاً لملف المخاطر والأهداف المالية قصيرة وطويلة المدى.",
-    href: "/investments",
+      "نماء يقترح منتجات استثمارية مناسبة لملف مخاطرك وأهدافك المالية قصيرة وطويلة المدى.",
+    href: "/ai-agent",
+    type: "ai",
   },
   {
     icon: Landmark,
     title: "مستشار التمويل",
     description:
-      "نماء يوصي بأنسب خيار تمويل بناءً على القدرة الائتمانية ومعايير الأهلية الحالية.",
-    href: "/financing",
+      "نماء يوصي بأنسب خيار تمويل بناءً على قدرتك الائتمانية ومعايير الأهلية الحالية.",
+    href: "/ai-agent",
+    type: "ai",
+  },
+  // ── Traditional — direct, no assessment needed ─────────────────────────────
+  {
+    icon: ArrowLeftRight,
+    title: "تحويل سريع",
+    description:
+      "حوّل الأموال إلى أي حساب داخلي أو خارجي فورياً دون أي خطوات إضافية.",
+    href: "/cards",
+    type: "traditional",
   },
   {
-    icon: CalendarDays,
-    title: "التقرير الأسبوعي الذكي",
+    icon: Receipt,
+    title: "الدفعات",
     description:
-      "احصل على ملخصات مالية أسبوعية مُولَّدة تلقائياً مع توصيات فورية وتنبيهات مخصصة.",
+      "سدّد فواتيرك ومدفوعاتك الشهرية من مكان واحد بضغطة واحدة وبدون رسوم.",
+    href: "/cards",
+    type: "traditional",
+  },
+  {
+    icon: CreditCard,
+    title: "البطاقات",
+    description:
+      "أدِر بطاقاتك الائتمانية والمدينة، تحكّم في الحدود وأوقف أو فعّل أي بطاقة فوراً.",
+    href: "/cards",
+    type: "traditional",
+  },
+  {
+    icon: FileText,
+    title: "كشف الحساب",
+    description:
+      "اطّلع على كشف حسابك الشهري التفصيلي وحمّله بصيغة PDF في أي وقت.",
     href: "/reports",
-  },
-  {
-    icon: Activity,
-    title: "المؤشر المالي",
-    description:
-      "اطّلع على مؤشر صحتك المالية المُولَّد بالذكاء الاصطناعي مع شرح تفصيلي وخطوات تحسين عملية.",
-    href: "/financial-health",
+    type: "traditional",
   },
 ];
 
@@ -96,14 +118,14 @@ export default function Services() {
       >
         <div>
           <div className="flex items-center gap-3 mb-1 flex-wrap">
-            <h1 className="text-2xl font-bold text-foreground">خدمات نماء AI</h1>
+            <h1 className="text-2xl font-bold text-foreground">خدمات نماء</h1>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/8 border border-primary/15 rounded-full">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-semibold text-primary">9 خدمات ذكية</span>
+              <span className="text-xs font-semibold text-primary">9 خدمات</span>
             </span>
           </div>
           <p className="text-sm text-muted-foreground">
-            جميع الخدمات مدعومة بالذكاء الاصطناعي وتعمل على بيانات ملفك المالي الفعلي.
+            خدمات الذكاء الاصطناعي تطرح أسئلة مالية عند تفعيلها فقط — الخدمات المصرفية تُفتح مباشرة.
           </p>
         </div>
       </motion.div>
@@ -127,15 +149,24 @@ export default function Services() {
                   "hover:border-primary/25 hover:shadow-md transition-all duration-200 group"
                 )}
               >
-                {/* Top row: icon + AI badge */}
+                {/* Top row: icon + badge */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
                     <svc.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/15">
-                    <Brain className="w-2.5 h-2.5 shrink-0" />
-                    AI Powered
-                  </span>
+
+                  {/* AI badge vs Direct badge */}
+                  {svc.type === "ai" ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/15">
+                      <Brain className="w-2.5 h-2.5 shrink-0" />
+                      AI Powered
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border">
+                      <Zap className="w-2.5 h-2.5 shrink-0" />
+                      مباشر
+                    </span>
+                  )}
                 </div>
 
                 {/* Title */}
@@ -151,7 +182,7 @@ export default function Services() {
                 {/* Footer CTA */}
                 <div className="flex items-center justify-end mt-4 pt-3 border-t border-border">
                   <span className="text-xs font-semibold text-primary flex items-center gap-1 group-hover:gap-1.5 transition-all">
-                    ابدأ الآن
+                    {svc.type === "ai" ? "ابدأ التقييم" : "افتح الخدمة"}
                     <ChevronLeft className="w-3 h-3" />
                   </span>
                 </div>
