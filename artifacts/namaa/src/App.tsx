@@ -14,6 +14,7 @@ import Investments from '@/pages/Investments';
 import FinancialHealth from '@/pages/FinancialHealth';
 import Reports from '@/pages/Reports';
 import Settings from '@/pages/Settings';
+import Services from '@/pages/Services';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ function Router() {
         <Route path="/investments" component={Investments} />
         <Route path="/financial-health" component={FinancialHealth} />
         <Route path="/reports" component={Reports} />
+        <Route path="/services" component={Services} />
         <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
