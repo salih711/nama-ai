@@ -1182,7 +1182,7 @@ function ReviewPhase({ onViewProduct }: { onViewProduct: () => void }) {
 
             {/* Right: match score */}
             <div className="sm:w-36 shrink-0 bg-primary/5 border border-primary/15 rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-1">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">نسبة التطابق</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">درجة التوافق</p>
               <p className="text-4xl font-black text-primary leading-none">{REVIEW_HERO.matchScore}%</p>
               <div className="flex items-center gap-1 mt-1">
                 {[...Array(5)].map((_, i) => (
@@ -1461,7 +1461,7 @@ export default function AiAgent() {
           { type: "gap",         title: "سيولة معطّلة",       text: "15,200 ريال في حسابات جارية لا تعطيك أي عائد." },
           { type: "opportunity", title: "فرصة تحسين العائد", text: "بإعادة توزيع المحفظة يمكن رفع العائد السنوي بمقدار 2.3%." },
         ],
-        recommendation: { productName: "محفظة الإنماء للنمو", compatibilityScore: 92, recommendationId: "rec-001" },
+        recommendation: { productName: "محفظة الإنماء للنمو", compatibilityScore: 94, recommendationId: "rec-001" },
         nextBestActions: [
           { step: 1, label: "اطّلع على التوصية المخصصة",       description: "راجع التوصية الكاملة مع أسباب الاختيار." },
           { step: 2, label: "تحدث مع مستشار الإنماء (اختياري)", description: "جلسة مجانية لمناقشة الخطوات العملية." },

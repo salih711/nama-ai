@@ -234,14 +234,14 @@ export default function Recommendation() {
 
             <div className="pt-4 border-t border-border">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-bold text-muted-foreground">درجة الثقة</span>
-                <span className="text-sm font-bold text-primary">{rec.explainableAI.confidenceScore}%</span>
+                <span className="text-xs font-bold text-muted-foreground">درجة التوافق</span>
+                <span className="text-sm font-bold text-primary">{rec.compatibilityScore}%</span>
               </div>
               <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-primary rounded-full"
                   initial={{ width: 0 }}
-                  animate={{ width: `${rec.explainableAI.confidenceScore}%` }}
+                  animate={{ width: `${rec.compatibilityScore}%` }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 />
               </div>

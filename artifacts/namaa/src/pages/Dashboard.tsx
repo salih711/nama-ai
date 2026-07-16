@@ -271,7 +271,7 @@ function AiHeroCard({ hero }: { hero: any }) {
           {/* Match score */}
           <div className="flex flex-col items-center gap-0.5 bg-primary/8 border border-primary/15 rounded-xl px-3 py-2 shrink-0">
             <p className="text-xl font-black text-primary leading-none">{hero.matchScore}%</p>
-            <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wide">تطابق</p>
+            <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wide">درجة التوافق</p>
           </div>
         </div>
 

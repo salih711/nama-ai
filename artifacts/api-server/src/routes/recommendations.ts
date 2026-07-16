@@ -7,8 +7,7 @@ const recommendations = [
     id: "rec-001",
     productName: "محفظة الإنماء للنمو — صندوق الاستثمار",
     productType: "استثمار",
-    compatibilityScore: 92,
-    confidenceScore: 94,
+    compatibilityScore: 94,
     summary: "بناءً على تحليل دخلك والتزاماتك وأهدافك، وجد نماء أن هذا الصندوق الأنسب لك لتحقيق نمو مستدام.",
     reasons: [
       { title: "يتناسب مع مستوى مخاطرتك", description: "استراتيجية المحفظة المتوازنة تتوافق تماماً مع تحملك للمخاطر المتوسطة." },
@@ -40,7 +39,6 @@ const recommendations = [
         { label: "مقارنة 47 منتجاً استثمارياً في الإنماء", done: true },
         { label: "اختيار أفضل منتج وفق ملفك المالي", done: true },
       ],
-      confidenceScore: 94,
     },
   },
   {
@@ -48,7 +46,6 @@ const recommendations = [
     productName: "بطاقة الإنماء الماسية بلاس",
     productType: "بطاقة ائتمانية",
     compatibilityScore: 87,
-    confidenceScore: 89,
     summary: "نماء رصد أن معدل إنفاقك الشهري يؤهلك للحصول على استرداد نقدي أعلى بـ 3× مقارنة ببطاقتك الحالية.",
     reasons: [
       { title: "يتناسب مع نمط إنفاقك", description: "معظم إنفاقك في التسوق والمطاعم — وهذه البطاقة تمنح 5% استرداداً عليها." },
@@ -78,7 +75,6 @@ const recommendations = [
         { label: "مقارنة 12 بطاقة في محفظة الإنماء", done: true },
         { label: "اختيار البطاقة الأمثل لملفك", done: true },
       ],
-      confidenceScore: 89,
     },
   },
 ];
