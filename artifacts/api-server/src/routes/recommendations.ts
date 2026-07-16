@@ -92,7 +92,7 @@ router.get("/recommendations", (req, res) => {
 router.get("/recommendations/:id", (req, res) => {
   const rec = recommendations.find(r => r.id === req.params.id);
   if (!rec) return res.status(404).json({ error: "التوصية غير موجودة" });
-  res.json(rec);
+  return res.json(rec);
 });
 
 export default router;
