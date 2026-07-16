@@ -16,7 +16,12 @@ import {
 import { cn } from "@/lib/utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Phase = "welcome" | "questioning" | "analyzing" | "report";
+type Phase = "welcome" | "questioning" | "analyzing" | "report" | "review";
+
+interface ReviewChatMessage {
+  role: "ai" | "user";
+  text: string;
+}
 
 interface AgentReport {
   goalLabel: string;
@@ -1031,6 +1036,302 @@ function ReportPhase({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Review Mode — constants
+// ─────────────────────────────────────────────────────────────────────────────
+const REVIEW_HERO = {
+  productName:  "خطة الادخار الذكية",
+  matchScore:   94,
+  reasonLines: [
+    "تم تحليل آخر 90 يوماً من معاملاتك.",
+    "لاحظ نماء وجود فائض شهري قدره 420 ريال.",
+    "بناءً على ذلك تم ترشيح خطة الادخار الذكية.",
+  ],
+  recHref: "/recommendation/rec-001",
+};
+
+const INITIAL_AI_MESSAGE =
+  "مرحباً صالح 👋\n\nلقد راجعت بياناتك المالية.\n\nيسعدني أن أشرح لك سبب هذه التوصية أو أجيب عن أي سؤال يتعلق بها.";
+
+const SUGGESTED_QUESTIONS = [
+  "لماذا اخترت هذا المنتج؟",
+  "كيف حسبت الفائض؟",
+  "ماذا لو ادخرت 1000 ريال؟",
+  "هل يوجد منتج أفضل لي؟",
+];
+
+const SUGGESTED_ANSWERS: Record<string, string> = {
+  "لماذا اخترت هذا المنتج؟":
+    "اخترت خطة الادخار الذكية لأن نماء رصد فائضاً شهرياً ثابتاً قدره 420 ريال لم يُستثمر خلال آخر 90 يوماً. هذا المنتج يحوّل هذا الفائض تلقائياً بعائد سنوي 3.7% — وهو الأعلى في فئته دون أي مخاطرة.",
+  "كيف حسبت الفائض؟":
+    "قارن نماء متوسط دخلك الشهري مع إجمالي مصاريفك وتحويلاتك خلال 90 يوماً. النتيجة: 420 ريال في المتوسط تبقى في حسابك الجاري دون استخدام في نهاية كل شهر.",
+  "ماذا لو ادخرت 1000 ريال؟":
+    "ممتاز! إذا حوّلت 1,000 ريال شهرياً لحساب التوفير، ستحصل على عائد سنوي يقارب 444 ريالاً إضافياً. خلال 5 سنوات ستتراكم مدخرات تقارب 66,000 ريال مع الفوائد المركّبة.",
+  "هل يوجد منتج أفضل لي؟":
+    "بناءً على ملفك الحالي، خطة الادخار الذكية هي الأنسب لأنها تحقق عائداً مضموناً بلا مخاطرة. إذا كنت مستعداً لتقبّل بعض المخاطرة مقابل عائد أعلى، يمكنني مقارنة محافظ الاستثمار — هل تريد ذلك؟",
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Phase 4 — Recommendation Review Mode
+// ─────────────────────────────────────────────────────────────────────────────
+function ReviewPhase({ onViewProduct }: { onViewProduct: () => void }) {
+  const [, setLocation] = useLocation();
+  const [messages, setMessages] = useState<ReviewChatMessage[]>([
+    { role: "ai", text: INITIAL_AI_MESSAGE },
+  ]);
+  const [inputText, setInputText]   = useState("");
+  const [isThinking, setIsThinking] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isThinking]);
+
+  const sendMessage = (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed || isThinking) return;
+    setMessages((prev) => [...prev, { role: "user", text: trimmed }]);
+    setInputText("");
+    setIsThinking(true);
+    setTimeout(() => {
+      const answer =
+        SUGGESTED_ANSWERS[trimmed] ??
+        `شكراً على سؤالك. بناءً على بياناتك المالية، هذه التوصية مبنية على تحليل دقيق لأنماط إنفاقك وفائضك الشهري. هل تريد أن أوضح جانباً معيناً بشكل أعمق؟`;
+      setMessages((prev) => [...prev, { role: "ai", text: answer }]);
+      setIsThinking(false);
+    }, 1100);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") sendMessage(inputText);
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-8 space-y-5">
+
+      {/* ── Recommendation Summary Card ───────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.38 }}
+        className="bg-card border border-card-border rounded-2xl shadow-sm overflow-hidden"
+        style={{ borderRightWidth: "4px", borderRightColor: "hsl(var(--primary))" }}
+      >
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex items-center gap-2.5 mb-5">
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shrink-0">
+              <Brain className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">نماء AI</p>
+              <p className="text-sm font-bold text-foreground">التوصية الحالية</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-start gap-5">
+            {/* Left: product + reason */}
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <PiggyBank className="w-4 h-4 text-primary" />
+                </div>
+                <h2 className="text-lg font-bold text-foreground">{REVIEW_HERO.productName}</h2>
+              </div>
+
+              {/* Reason lines */}
+              <div className="space-y-1.5 mb-5">
+                {REVIEW_HERO.reasonLines.map((line, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + i * 0.08 }}
+                    className="flex items-start gap-2"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                    <p className="text-sm text-muted-foreground leading-relaxed">{line}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex items-center gap-3 flex-wrap">
+                <button
+                  onClick={() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" })}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-secondary border border-border rounded-xl text-sm font-semibold text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-primary" />
+                  تحدث مع نماء
+                </button>
+                <button
+                  onClick={onViewProduct}
+                  className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl text-sm font-bold hover:bg-primary/90 transition-colors shadow-sm"
+                >
+                  عرض المنتج
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Right: match score */}
+            <div className="sm:w-36 shrink-0 bg-primary/5 border border-primary/15 rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-1">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">نسبة التطابق</p>
+              <p className="text-4xl font-black text-primary leading-none">{REVIEW_HERO.matchScore}%</p>
+              <div className="flex items-center gap-1 mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={cn(
+                      "w-3 h-3",
+                      i < Math.round(REVIEW_HERO.matchScore / 20)
+                        ? "fill-primary text-primary"
+                        : "text-muted-foreground/30",
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── AI Conversation ───────────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.38, delay: 0.15 }}
+        className="bg-card border border-card-border rounded-2xl shadow-sm overflow-hidden"
+      >
+        {/* Chat header */}
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-border bg-secondary/30">
+          <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shrink-0">
+            <Sparkles className="w-4 h-4 text-white" />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-foreground">نماء — مستشارك المالي</p>
+            <p className="text-xs text-muted-foreground">يمكنك سؤاله عن أي تفصيل في هذه التوصية</p>
+          </div>
+          <div className="mr-auto flex items-center gap-1.5 px-2.5 py-1 bg-primary/8 border border-primary/15 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-[10px] font-bold text-primary">متاح الآن</span>
+          </div>
+        </div>
+
+        {/* Messages */}
+        <div className="p-5 space-y-4 min-h-[220px]">
+          <AnimatePresence initial={false}>
+            {messages.map((msg, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
+                className={cn("flex gap-3", msg.role === "user" ? "flex-row-reverse" : "flex-row")}
+              >
+                {/* Avatar */}
+                {msg.role === "ai" ? (
+                  <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shrink-0 mt-0.5">
+                    <Brain className="w-4 h-4 text-white" />
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 rounded-xl bg-secondary border border-border flex items-center justify-center shrink-0 mt-0.5 text-sm font-bold text-muted-foreground">
+                    ص
+                  </div>
+                )}
+
+                {/* Bubble */}
+                <div
+                  className={cn(
+                    "max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-line",
+                    msg.role === "ai"
+                      ? "bg-secondary/60 border border-border text-foreground"
+                      : "bg-primary text-white",
+                  )}
+                >
+                  {msg.text}
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Thinking indicator */}
+            {isThinking && (
+              <motion.div
+                key="thinking"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="flex gap-3"
+              >
+                <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shrink-0">
+                  <Brain className="w-4 h-4 text-white" />
+                </div>
+                <div className="bg-secondary/60 border border-border rounded-2xl px-4 py-3 flex items-center gap-1.5">
+                  {[0, 1, 2].map((i) => (
+                    <span
+                      key={i}
+                      className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce"
+                      style={{ animationDelay: `${i * 0.18}s` }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <div ref={chatEndRef} />
+        </div>
+
+        {/* Suggested questions */}
+        {messages.length <= 2 && !isThinking && (
+          <div className="px-5 pb-4">
+            <p className="text-[11px] font-bold text-muted-foreground mb-2.5">أسئلة مقترحة</p>
+            <div className="flex flex-wrap gap-2">
+              {SUGGESTED_QUESTIONS.map((q) => (
+                <button
+                  key={q}
+                  onClick={() => sendMessage(q)}
+                  className="text-xs font-semibold px-3 py-1.5 bg-secondary border border-border rounded-xl text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Input */}
+        <div className="px-5 pb-5 pt-1 border-t border-border">
+          <div className="flex items-center gap-3 bg-secondary/50 border border-border rounded-xl px-4 py-2.5">
+            <input
+              type="text"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="اكتب سؤالك هنا…"
+              disabled={isThinking}
+              className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none min-w-0 text-right"
+              dir="rtl"
+            />
+            <button
+              onClick={() => sendMessage(inputText)}
+              disabled={!inputText.trim() || isThinking}
+              className={cn(
+                "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all",
+                inputText.trim() && !isThinking
+                  ? "bg-primary text-white hover:bg-primary/90"
+                  : "bg-secondary text-muted-foreground/40",
+              )}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </motion.div>
+
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Main Component
 // ─────────────────────────────────────────────────────────────────────────────
 export default function AiAgent() {
@@ -1042,7 +1343,12 @@ export default function AiAgent() {
     new URLSearchParams(window.location.search).get("service") ?? "smart-recommendation"
   ).current;
 
-  const [phase, setPhase] = useState<Phase>("welcome");
+  // Detect review mode (coming from Dashboard "اعرف السبب")
+  const modeParam = useRef(
+    new URLSearchParams(window.location.search).get("mode") ?? null
+  ).current;
+
+  const [phase, setPhase] = useState<Phase>(modeParam === "review" ? "review" : "welcome");
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<AgentQuestion | null>(null);
   const [recommendationId, setRecommendationId] = useState<string | null>(null);
@@ -1198,6 +1504,15 @@ export default function AiAgent() {
       {phase === "report" && report && (
         <motion.div key="report" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <ReportPhase report={report} onViewRecommendation={handleViewRecommendation} />
+        </motion.div>
+      )}
+
+      {/* Phase 4 — Review (coming from Dashboard "اعرف السبب") */}
+      {phase === "review" && (
+        <motion.div key="review" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <ReviewPhase
+            onViewProduct={() => setLocation(REVIEW_HERO.recHref)}
+          />
         </motion.div>
       )}
 

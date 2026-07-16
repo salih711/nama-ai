@@ -311,7 +311,7 @@ function AiHeroCard({ hero }: { hero: any }) {
 
             {/* CTA buttons */}
             <div className="flex items-center gap-3 flex-wrap">
-              <Link href={`/ai-agent?service=health-report`}>
+              <Link href={`/ai-agent?mode=review`}>
                 <button className="flex items-center gap-2 px-4 py-2.5 bg-secondary border border-border rounded-xl text-sm font-semibold text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all">
                   <Sparkles className="w-3.5 h-3.5 text-primary" />
                   اعرف السبب
