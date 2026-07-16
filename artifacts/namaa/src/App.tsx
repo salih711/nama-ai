@@ -15,6 +15,10 @@ import FinancialHealth from '@/pages/FinancialHealth';
 import Reports from '@/pages/Reports';
 import Settings from '@/pages/Settings';
 import Services from '@/pages/Services';
+import Transfer from '@/pages/Transfer';
+import Payments from '@/pages/Payments';
+import Beneficiaries from '@/pages/Beneficiaries';
+import InternationalTransfer from '@/pages/InternationalTransfer';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +35,10 @@ function Router() {
         <Route path="/financial-health" component={FinancialHealth} />
         <Route path="/reports" component={Reports} />
         <Route path="/services" component={Services} />
+        <Route path="/transfer" component={Transfer} />
+        <Route path="/payments" component={Payments} />
+        <Route path="/beneficiaries" component={Beneficiaries} />
+        <Route path="/international-transfer" component={InternationalTransfer} />
         <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>

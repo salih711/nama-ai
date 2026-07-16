@@ -25,13 +25,13 @@ const BANKING_SERVICES: { icon: React.ElementType; title: string; description: s
     icon: ArrowLeftRight,
     title: "التحويل السريع",
     description: "حوّل الأموال إلى أي حساب داخلي فورياً دون أي خطوات إضافية.",
-    href: "/cards",
+    href: "/transfer",
   },
   {
     icon: Receipt,
     title: "المدفوعات",
     description: "سدّد فواتيرك ومدفوعاتك الشهرية من مكان واحد وبدون رسوم.",
-    href: "/cards",
+    href: "/payments",
   },
   {
     icon: FileText,
@@ -43,7 +43,7 @@ const BANKING_SERVICES: { icon: React.ElementType; title: string; description: s
     icon: Users,
     title: "إدارة المستفيدين",
     description: "أضف مستفيدين جدداً وأدِر قائمة حساباتك المحفوظة بسهولة.",
-    href: "/cards",
+    href: "/beneficiaries",
   },
   {
     icon: CreditCard,
@@ -55,7 +55,7 @@ const BANKING_SERVICES: { icon: React.ElementType; title: string; description: s
     icon: Globe,
     title: "التحويل الدولي",
     description: "أرسل الأموال إلى الخارج بأسعار صرف تنافسية وتتبّع فوري للحوالة.",
-    href: "/cards",
+    href: "/international-transfer",
   },
 ];
 
