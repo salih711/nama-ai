@@ -1059,22 +1059,18 @@ const SUGGESTED_QUESTIONS = [
   "هل يوجد منتج أفضل لي؟",
 ];
 
-const SUGGESTED_ANSWERS: Record<string, string> = {
-  "لماذا اخترت هذا المنتج؟":
-    "اخترت خطة الادخار الذكية لأن نماء رصد فائضاً شهرياً ثابتاً قدره 420 ريال لم يُستثمر خلال آخر 90 يوماً. هذا المنتج يحوّل هذا الفائض تلقائياً بعائد سنوي 3.7% — وهو الأعلى في فئته دون أي مخاطرة.",
-  "كيف حسبت الفائض؟":
-    "قارن نماء متوسط دخلك الشهري مع إجمالي مصاريفك وتحويلاتك خلال 90 يوماً. النتيجة: 420 ريال في المتوسط تبقى في حسابك الجاري دون استخدام في نهاية كل شهر.",
-  "ماذا لو ادخرت 1000 ريال؟":
-    "ممتاز! إذا حوّلت 1,000 ريال شهرياً لحساب التوفير، ستحصل على عائد سنوي يقارب 444 ريالاً إضافياً. خلال 5 سنوات ستتراكم مدخرات تقارب 66,000 ريال مع الفوائد المركّبة.",
-  "هل يوجد منتج أفضل لي؟":
-    "بناءً على ملفك الحالي، خطة الادخار الذكية هي الأنسب لأنها تحقق عائداً مضموناً بلا مخاطرة. إذا كنت مستعداً لتقبّل بعض المخاطرة مقابل عائد أعلى، يمكنني مقارنة محافظ الاستثمار — هل تريد ذلك؟",
-};
+// Answers are now generated server-side via POST /api/ai-agent/review-chat
+// using the Financial Insight Object (Layer 2 — no raw banking data).
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Phase 4 — Recommendation Review Mode
 // ─────────────────────────────────────────────────────────────────────────────
 function ReviewPhase({ onViewProduct }: { onViewProduct: () => void }) {
   const [, setLocation] = useLocation();
+
+  // Stable session ID for this review conversation (server maintains history)
+  const reviewSessionId = useRef(makeSessionId()).current;
+
   const [messages, setMessages] = useState<ReviewChatMessage[]>([
     { role: "ai", text: INITIAL_AI_MESSAGE },
   ]);
@@ -1086,19 +1082,30 @@ function ReviewPhase({ onViewProduct }: { onViewProduct: () => void }) {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isThinking]);
 
-  const sendMessage = (text: string) => {
+  const sendMessage = async (text: string) => {
     const trimmed = text.trim();
     if (!trimmed || isThinking) return;
+
     setMessages((prev) => [...prev, { role: "user", text: trimmed }]);
     setInputText("");
     setIsThinking(true);
-    setTimeout(() => {
-      const answer =
-        SUGGESTED_ANSWERS[trimmed] ??
-        `شكراً على سؤالك. بناءً على بياناتك المالية، هذه التوصية مبنية على تحليل دقيق لأنماط إنفاقك وفائضك الشهري. هل تريد أن أوضح جانباً معيناً بشكل أعمق؟`;
-      setMessages((prev) => [...prev, { role: "ai", text: answer }]);
+
+    try {
+      const res = await fetch("/api/ai-agent/review-chat", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ sessionId: reviewSessionId, message: trimmed }),
+      });
+      const data = await res.json() as { reply: string };
+      setMessages((prev) => [...prev, { role: "ai", text: data.reply }]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "ai", text: "تعذّر الاتصال بالمستشار. يرجى المحاولة مجدداً." },
+      ]);
+    } finally {
       setIsThinking(false);
-    }, 1100);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -1190,6 +1197,22 @@ function ReviewPhase({ onViewProduct }: { onViewProduct: () => void }) {
                   />
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* ── Security Trust Badge ──────────────────────────────────── */}
+          <div className="mt-5 pt-4 border-t border-border/60">
+            <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+              {[
+                "اكتمل التحليل داخل البيئة الآمنة للإنماء",
+                "نماء AI يستقبل رؤى مالية فقط",
+                "بيانات الحساب الحساسة لا تغادر النظام المصرفي",
+              ].map((label) => (
+                <div key={label} className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span className="text-[11px] text-muted-foreground font-medium">{label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

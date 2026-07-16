@@ -1,0 +1,152 @@
+Redesign the AI architecture to follow a secure banking model.
+
+IMPORTANT:
+The AI assistant must NEVER access raw banking data directly.
+
+------------------------------------------------
+
+New Architecture
+
+Layer 1
+Bank Analysis Engine
+
+This internal engine owns all sensitive financial data.
+
+Examples:
+
+• salary
+• transactions
+• balances
+• IBAN
+• account numbers
+• personal information
+
+These values NEVER leave the banking system.
+
+------------------------------------------------
+
+Layer 2
+Financial Insight Object
+
+The Analysis Engine produces a secure summary object.
+
+Example:
+
+Financial Profile
+
+Monthly surplus
+
+420 SAR
+
+Financial health
+
+Good
+
+Savings score
+
+82
+
+Investment readiness
+
+Medium
+
+Financing eligibility
+
+High
+
+Recommended product
+
+Smart Savings Plan
+
+Recommendation confidence
+
+94%
+
+Reason
+
+Stable income with recurring monthly surplus.
+
+------------------------------------------------
+
+Layer 3
+Namaa AI
+
+The AI assistant only receives the Financial Insight Object.
+
+It never receives:
+
+salary
+
+transaction list
+
+IBAN
+
+account number
+
+identity information
+
+personal identifiers
+
+Instead it receives only calculated insights.
+
+------------------------------------------------
+
+Example
+
+Instead of
+
+Salary = 8500
+
+Transactions = [...]
+
+Send
+
+Monthly surplus = 420
+
+Savings score = 82
+
+Health = Good
+
+Recommendation = Smart Savings Plan
+
+Reason = Stable monthly surplus
+
+------------------------------------------------
+
+Chat Behaviour
+
+When users ask:
+
+Why did you recommend this?
+
+How did you calculate it?
+
+What if I save 1000 SAR?
+
+The AI must answer using ONLY the Financial Insight Object.
+
+Never expose raw banking data.
+
+------------------------------------------------
+
+UI
+
+Inside the recommendation page display
+
+✔ Analysis completed inside Alinma secure environment
+
+✔ AI receives financial insights only
+
+✔ Sensitive banking data never leaves the banking system
+
+This should appear as a small security badge or information panel.
+
+------------------------------------------------
+
+No design changes.
+
+Do not modify colors.
+
+Do not change layout.
+
+Only change the architecture and the source of AI responses.

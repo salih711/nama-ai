@@ -646,4 +646,293 @@ router.get("/ai-agent/report", (req, res) => {
   res.json(generateReport(session));
 });
 
+// ═════════════════════════════════════════════════════════════════════════════
+// SECURE AI ARCHITECTURE — 3-LAYER MODEL
+// ─────────────────────────────────────────────────────────────────────────────
+// Layer 1: Bank Analysis Engine — owns raw data (salary, IBAN, transactions,
+//          account numbers, identity). NEVER leaves this secure environment.
+//
+// Layer 2: Financial Insight Object — computed summary only. No raw values.
+//          This is ALL the AI ever receives.
+//
+// Layer 3: Namaa AI — receives Layer 2 object only, answers from insights.
+// ═════════════════════════════════════════════════════════════════════════════
+
+interface FinancialInsight {
+  monthlySurplus: number;
+  financialHealth: string;
+  savingsScore: number;
+  investmentReadiness: string;
+  financingEligibility: string;
+  recommendedProduct: string;
+  confidence: number;
+  recommendationReason: string;
+  analysisWindowDays: number;
+  annualReturnPct: number;
+  projectedAnnualGainSAR: number;
+}
+
+// Layer 2 object — the only data the AI touches
+const FINANCIAL_INSIGHT: FinancialInsight = {
+  monthlySurplus:         420,
+  financialHealth:        "جيد",
+  savingsScore:           82,
+  investmentReadiness:    "متوسطة",
+  financingEligibility:   "مرتفعة",
+  recommendedProduct:     "خطة الادخار الذكية",
+  confidence:             94,
+  recommendationReason:   "دخل ثابت مع فائض شهري متكرر",
+  analysisWindowDays:     90,
+  annualReturnPct:        3.7,
+  projectedAnnualGainSAR: 187,
+};
+
+// ─── Review Chat Session Store ─────────────────────────────────────────────────
+interface ReviewChatSession {
+  history: { role: "user" | "ai"; text: string }[];
+  topicDepth: Record<string, number>;  // how many times each topic was addressed
+  lastTopic:  string;                  // most recent substantive topic
+}
+
+const reviewChatSessions = new Map<string, ReviewChatSession>();
+
+function getReviewSession(id: string): ReviewChatSession {
+  if (!reviewChatSessions.has(id)) {
+    reviewChatSessions.set(id, { history: [], topicDepth: {}, lastTopic: "none" });
+  }
+  return reviewChatSessions.get(id)!;
+}
+
+// ─── Intent Detection ──────────────────────────────────────────────────────────
+function detectIntent(msg: string): string {
+  const m = msg.trim();
+  const lo = m.toLowerCase();
+
+  // Specific amount detection — must run before generic WHAT_IF
+  if (/\d/.test(m) && (m.includes("ريال") || m.includes("ر.س") || lo.includes("ادخرت") || lo.includes("وفرت") || lo.includes("حولت"))) return "WHAT_IF_AMOUNT";
+  if (lo.includes("لو ادخرت") || lo.includes("ماذا لو") || lo.includes("لو وفرت") || lo.includes("لو حولت") || lo.includes("ماذا يحدث لو")) return "WHAT_IF";
+
+  // Why recommended
+  if (lo.includes("لماذا") || lo.includes("ليش") || lo.includes("سبب") || lo.includes("لماذا رشحت") || lo.includes("لماذا اخترت") || lo.includes("لماذا هذا")) return "WHY";
+
+  // How calculated
+  if (lo.includes("كيف حسبت") || lo.includes("كيف احتسب") || lo.includes("الحساب") || lo.includes("كيف عرفت") || lo.includes("الطريقة") || lo.includes("منهجية") || lo.includes("كيف حسب") || lo.includes("حسبت ذلك") || lo.includes("كيف جاء")) return "HOW_CALCULATED";
+
+  // Better option
+  if ((lo.includes("يوجد") || lo.includes("في") || lo.includes("هل")) && lo.includes("أفضل")) return "BETTER_OPTION";
+  if (lo.includes("بديل") || lo.includes("خيار آخر") || lo.includes("منتج آخر")) return "BETTER_OPTION";
+
+  // Affirmation — continue last topic deeper
+  if (m === "نعم" || m === "صح" || m === "تمام" || m === "أيوه" || m === "أكمل" || m === "كمّل" || m === "أكيد" || lo.includes("موافق") || lo.includes("طبعا") || lo.includes("طبعاً") || lo.includes("استمر")) return "AFFIRM";
+
+  // Explain more / don't understand — both continue last topic
+  if (lo.includes("اشرح") || (lo.includes("أكثر") && lo.length < 20) || lo.includes("توضيح") || lo.includes("وضح") || lo.includes("تفصيل") || lo.includes("مزيد")) return "MORE";
+  if (lo.includes("لم أفهم") || lo.includes("ما فهمت") || lo.includes("غير واضح") || lo.includes("ما واضح") || lo.includes("مو واضح") || lo.includes("لا أفهم")) return "DONT_UNDERSTAND";
+
+  // Example
+  if (lo.includes("مثال") || lo.includes("مثلاً") || lo.includes("مثلا") || lo.includes("أعطني مثال")) return "EXAMPLE";
+
+  // How long / timeline
+  if (lo.includes("كم وقت") || lo.includes("متى") || lo.includes("كم شهر") || lo.includes("كم سنة") || lo.includes("المدة") || lo.includes("الوقت")) return "HOW_LONG";
+
+  // Risk / safety
+  if (lo.includes("مخاطر") || lo.includes("مخاطرة") || lo.includes("آمن") || lo.includes("ضمان") || lo.includes("مضمون") || lo.includes("خسارة")) return "RISK";
+
+  // Comparison
+  if (lo.includes("مقارنة") || lo.includes("قارن") || lo.includes("الفرق") || lo.includes("مقابل") || lo.includes("مقارنةً")) return "COMPARE";
+
+  // Next steps
+  if (lo.includes("ماذا أفعل") || lo.includes("الخطوات") || lo.includes("كيف أبدأ") || lo.includes("كيف أفعّل") || lo.includes("كيف أنضم")) return "NEXT_STEPS";
+
+  return "GENERAL";
+}
+
+// ─── Amount Parser ─────────────────────────────────────────────────────────────
+function parseAmount(msg: string): number | null {
+  const match = msg.match(/(\d[\d,،\.]*)/);
+  if (!match) return null;
+  const num = parseInt(match[1].replace(/[,،\.]/g, ""), 10);
+  return isNaN(num) || num > 1_000_000 ? null : num;
+}
+
+// ─── Context-Aware Response Generator ─────────────────────────────────────────
+function generateReply(
+  intent: string,
+  session: ReviewChatSession,
+  userMsg: string,
+): string {
+  const ins = FINANCIAL_INSIGHT;
+
+  // Continuation intents → go deeper into the last topic without repeating
+  if (intent === "AFFIRM" || intent === "MORE" || intent === "DONT_UNDERSTAND") {
+    const continueTopic = session.lastTopic && session.lastTopic !== "none"
+      ? session.lastTopic
+      : "WHY";
+    const continueDepth = session.topicDepth[continueTopic] ?? 0;
+    const reply = buildReply(continueTopic, continueDepth, userMsg, ins, session);
+    session.topicDepth[continueTopic] = continueDepth + 1;
+    session.lastTopic = continueTopic;
+    return reply;
+  }
+
+  const depth = session.topicDepth[intent] ?? 0;
+  const reply = buildReply(intent, depth, userMsg, ins, session);
+  session.topicDepth[intent] = depth + 1;
+  session.lastTopic = intent;
+  return reply;
+}
+
+function buildReply(
+  topic: string,
+  depth: number,
+  userMsg: string,
+  ins: FinancialInsight,
+  session: ReviewChatSession,
+): string {
+  const { monthlySurplus, savingsScore, confidence, annualReturnPct,
+          projectedAnnualGainSAR, analysisWindowDays,
+          recommendedProduct, investmentReadiness } = ins;
+
+  switch (topic) {
+
+    // ── WHY recommended ────────────────────────────────────────────────────
+    case "WHY": {
+      const angles = [
+        `رصد نماء فائضاً شهرياً ثابتاً قدره ${monthlySurplus} ريال على مدى ${analysisWindowDays} يوماً — مبلغ يتراكم دون أن يُنتج أي عائد.\n\n${recommendedProduct} تُحوّل هذا الفائض تلقائياً بعائد ${annualReturnPct}% سنوياً — الأعلى في فئة المنتجات المضمونة تماماً.`,
+
+        `درجة صحتك المالية ${savingsScore}/100 تؤكد أن دخلك مستقر وإنفاقك منتظم. هذا بالضبط ما يجعل خطة الادخار أكثر فاعلية لك.\n\nالجاهزية الاستثمارية "${investmentReadiness}" تعني أن المنتجات الاستثمارية الأكثر مخاطرة لا تُناسب مرحلتك الآن — الادخار المضمون هو الخطوة الصحيحة التي تبني عليها لاحقاً.`,
+
+        `قبل اختيار ${recommendedProduct}، قارن نماء 6 منتجات في نفس الفئة. التطابق ${confidence}% كان الأعلى بفارق واضح عن المنتج الثاني (76%).\n\nالميزة الحاسمة: عائد يومي مُتراكم + سحب مجاني في أي وقت + بدون حد أدنى للرصيد. لا يوجد منتج آخر يجمع الثلاثة معاً في نفس مستوى الأمان.`,
+
+        `لو انتظرت سنة كاملة بدون تفعيل، خسرت ${projectedAnnualGainSAR} ريالاً على الأقل من عائد ضائع.\n\nالفائدة المركّبة تعمل بشكل أفضل كلما بدأت مبكراً — كل شهر تأخير يُكلّفك ما يقارب ${Math.round(projectedAnnualGainSAR / 12)} ريالاً لا تعود إليك.`,
+      ];
+      return angles[Math.min(depth, angles.length - 1)];
+    }
+
+    // ── HOW calculated ────────────────────────────────────────────────────
+    case "HOW_CALCULATED": {
+      const angles = [
+        `التحليل يعمل على مدى ${analysisWindowDays} يوماً ويقيس الفرق بين التدفق الداخل والصادر من الحساب.\n\nالنتيجة: ${monthlySurplus} ريالاً تبقى غير مُستخدمة في المتوسط نهاية كل شهر. الرقم تكرّر بانتظام على مدى ثلاثة أشهر متتالية — وهذا ما يجعله أساساً موثوقاً للتوصية.`,
+
+        `درجة التطابق ${confidence}% محسوبة من 12 معياراً:\n• استقرار الدخل ✓\n• انتظام الفائض الشهري ✓\n• درجة الصحة المالية ${savingsScore}/100 ✓\n• مستوى الالتزامات الحالية ✓\n• الجاهزية الاستثمارية (${investmentReadiness}) ✓\n\nالمنتج حقق 11 من 12 معياراً — المعيار الجزئي الوحيد هو الأفق الزمني طويل المدى.`,
+
+        `درجة الصحة المالية ${savingsScore}/100 جاءت من ثلاثة محاور مرجّحة:\n• استقرار الدخل: 30% من الدرجة\n• انضباط الإنفاق: 35% — أقوى جانب في ملفك\n• الجاهزية الاستثمارية: 35%\n\nمجموع هذه المحاور أعطى ${savingsScore} — مستوى "جيد" يفتح منتجات الادخار المضمونة بشروط مميزة.`,
+
+        `الـ ${monthlySurplus} ريال ليست رقماً ثابتاً — نماء يحسبها كمتوسط متحرك لثلاثة أشهر.\n\nمثال على الأشهر الثلاثة: شهر بـ 380 ريال، وآخر بـ 450، وثالث بـ 430. المتوسط ${monthlySurplus} ريال. هذا الأسلوب يحمي التوصية من التأثر بشهر غير اعتيادي كشهر إجازة أو نفقة طارئة.`,
+      ];
+      return angles[Math.min(depth, angles.length - 1)];
+    }
+
+    // ── WHAT IF (with amount) ─────────────────────────────────────────────
+    case "WHAT_IF_AMOUNT":
+    case "WHAT_IF": {
+      const amount = topic === "WHAT_IF_AMOUNT" ? parseAmount(userMsg) : null;
+
+      // Monthly-contribution compound interest: FV = PMT * ((1+r)^n − 1) / r
+      const monthlyRate = annualReturnPct / 100 / 12;
+      function fvMonthly(pmt: number, n: number) {
+        return Math.round(pmt * ((Math.pow(1 + monthlyRate, n) - 1) / monthlyRate));
+      }
+
+      if (!amount) {
+        const fv12_420  = fvMonthly(monthlySurplus, 12);
+        const int12_420 = fv12_420 - monthlySurplus * 12;
+        const fv12_1000 = fvMonthly(1000, 12);
+        const int12_1k  = fv12_1000 - 1000 * 12;
+        return `بالفائض الحالي ${monthlySurplus} ريالاً شهرياً:\n• بعد 12 شهراً: ${fv12_420.toLocaleString("ar-SA")} ريال (${(monthlySurplus * 12).toLocaleString("ar-SA")} ادخار + ${int12_420} عائد)\n• بعد 5 سنوات: ~${fvMonthly(monthlySurplus, 60).toLocaleString("ar-SA")} ريال مع الفائدة المركّبة\n\nمثلاً: 1,000 ريال/شهر يُعطي عائداً سنوياً يقارب ${int12_1k} ريالاً وإجمالي ${fv12_1000.toLocaleString("ar-SA")} ريال بعد سنة.`;
+      }
+
+      const fv12      = fvMonthly(amount, 12);
+      const annualReturn  = fv12 - amount * 12;
+      const after12m  = fv12;
+      const after5yr  = fvMonthly(amount, 60);
+      const vsNow         = amount > monthlySurplus
+        ? `هذا ${amount - monthlySurplus} ريالاً فوق فائضك الحالي — يمكن تحقيقه بمراجعة بعض بنود الإنفاق غير الأساسي.`
+        : `هذا أقل من فائضك الحالي ${monthlySurplus} ريالاً — الفائض موجود بالفعل ويمكن توجيهه مباشرةً.`;
+
+      return `لو ادخرت ${amount.toLocaleString("ar-SA")} ريالاً شهرياً بعائد ${annualReturnPct}%:\n• العائد السنوي: ~${annualReturn.toLocaleString("ar-SA")} ريال\n• بعد 12 شهراً: ${after12m.toLocaleString("ar-SA")} ريال\n• بعد 5 سنوات (فائدة مركّبة): ~${after5yr.toLocaleString("ar-SA")} ريال\n\n${vsNow}`;
+    }
+
+    // ── BETTER OPTION ──────────────────────────────────────────────────────
+    case "BETTER_OPTION": {
+      const angles = [
+        `بملفك الحالي — صحة مالية ${savingsScore}/100 وجاهزية استثمارية ${investmentReadiness} — ${recommendedProduct} هي الأنسب الآن.\n\nالبديل الوحيد المعقول إذا قبلت مخاطرة أعلى هو صناديق الاستثمار، لكنها تحتاج أفقاً زمنياً أطول وتقبّلاً للتذبذب.`,
+
+        `صناديق الاستثمار يمكن أن تُعطي 6-12% سنوياً — لكنها تتذبذب مع السوق ولا تضمن الأصل.\n\nالاستراتيجية التي يتبعها كثير من العملاء في ملفك: ابدأ بالادخار المضمون لبناء وسادة مالية خلال 6-12 شهراً، ثم خصص جزءاً للاستثمار. الأمان أولاً، النمو لاحقاً.`,
+
+        `الخيار الأمثل للملفات المشابهة لك:\n• 70% في ${recommendedProduct} — مضمون، عائد ${annualReturnPct}%\n• 30% في صندوق نمو معتدل — 6-8% متوقع مع تذبذب مقبول\n\nهذا المزج يمنحك استقراراً مع فرصة نمو أعلى. هل تريد حساب العائد المجمّع لهذا التوزيع؟`,
+      ];
+      return angles[Math.min(depth, angles.length - 1)];
+    }
+
+    // ── EXAMPLE ───────────────────────────────────────────────────────────
+    case "EXAMPLE": {
+      if (depth === 0) {
+        const yr1 = monthlySurplus * 12 + projectedAnnualGainSAR;
+        const yr5 = Math.round(monthlySurplus * 60 * 1.19);
+        return `مثال عملي — ادخار ${monthlySurplus} ريالاً كل شهر بعائد ${annualReturnPct}%:\n\nبعد 12 شهراً:\nالادخار: ${(monthlySurplus * 12).toLocaleString("ar-SA")} ريال + العائد: ${projectedAnnualGainSAR} ريال = ${yr1.toLocaleString("ar-SA")} ريال\n\nبعد 5 سنوات:\n~${yr5.toLocaleString("ar-SA")} ريال (مع الفائدة المركّبة)\n\nفي الحساب الجاري العادي: ${(monthlySurplus * 60).toLocaleString("ar-SA")} ريال بلا عائد.\nالفرق: ~${(yr5 - monthlySurplus * 60).toLocaleString("ar-SA")} ريال — لمجرد تحويل تلقائي شهري.`;
+      }
+      return `مثال مقارنة بين مسارين:\n\nمسار أ — لا تفعل شيئاً:\nالفائض ${monthlySurplus} ريال/شهر يبقى في الجاري → بعد 5 سنوات: ${(monthlySurplus * 60).toLocaleString("ar-SA")} ريال فقط\n\nمسار ب — تُفعّل ${recommendedProduct}:\nنفس المبلغ بعائد ${annualReturnPct}% → بعد 5 سنوات: ~${Math.round(monthlySurplus * 60 * 1.19).toLocaleString("ar-SA")} ريال\n\nالقرار لا يكلّفك شيئاً إضافياً — فقط توجيه ما هو موجود بالفعل.`;
+    }
+
+    // ── HOW LONG ──────────────────────────────────────────────────────────
+    case "HOW_LONG": {
+      return `${recommendedProduct} ليس لها مدة إلزامية — أموالك متاحة للسحب في أي وقت دون غرامات.\n\nلكن للاستفادة الكاملة من الفائدة المركّبة:\n• 3 أشهر: تبدأ ترى الفرق الفعلي عن الحساب الجاري\n• 12 شهراً: عائد ${projectedAnnualGainSAR} ريالاً مُتراكماً\n• 5 سنوات: الفائدة المركّبة تصبح ملموسة جداً\n\nكلما استمررت أطول، كلما تضاعف الأثر.`;
+    }
+
+    // ── RISK ──────────────────────────────────────────────────────────────
+    case "RISK": {
+      return `${recommendedProduct} منتج مضمون بالكامل:\n• العائد ${annualReturnPct}% سنوياً ثابت ومحدد مسبقاً\n• لا يتأثر بتذبذبات الأسواق المالية\n• أصلك محفوظ بالكامل في أي وقت\n• سحب مجاني دون غرامات أو شروط\n\nالمخاطرة الوحيدة النظرية هي تغيير السياسة النقدية مستقبلاً — وهو أمر نادر، تُعلمك به الخطة مسبقاً.`;
+    }
+
+    // ── COMPARE ───────────────────────────────────────────────────────────
+    case "COMPARE": {
+      return `مقارنة الخيارات المتاحة:\n\n• حساب جارٍ عادي: 0% عائد\n• ${recommendedProduct}: ${annualReturnPct}% سنوياً ✓ مضمون\n• حسابات ادخار منافسة: 2.8–3.2% (أقل بـ 0.5–0.9%)\n• صناديق استثمار: 6–12% لكن مع مخاطرة على الأصل\n\nبملفك (صحة مالية ${savingsScore}، جاهزية ${investmentReadiness})، الادخار المضمون هو الأساس الصحيح. الاستثمار خطوة لاحقة بعد بناء الوسادة.`;
+    }
+
+    // ── NEXT STEPS ────────────────────────────────────────────────────────
+    case "NEXT_STEPS": {
+      return `خطواتك العملية:\n\n1. افتح تطبيق الإنماء → قسم "الادخار"\n2. حدد مبلغ التحويل الشهري (${monthlySurplus} ريال كحد أدنى موصى به)\n3. فعّل التحويل التلقائي في أول كل شهر\n4. راجع رصيدك وعائدك كل 3 أشهر\n\nالإعداد كله يأخذ أقل من 5 دقائق. العائد يبدأ من اليوم الأول للتفعيل.`;
+    }
+
+    // ── GENERAL (fallback) ────────────────────────────────────────────────
+    default: {
+      const covered = Object.keys(session.topicDepth);
+      if (!covered.includes("WHY")) {
+        session.topicDepth["WHY"] = 1;
+        session.lastTopic = "WHY";
+        return `الفائض الشهري البالغ ${monthlySurplus} ريالاً هو قلب هذه التوصية. نماء رصده على مدى ${analysisWindowDays} يوماً ووجد أنه متكرر وثابت — وهذا بالضبط ما يجعل ${recommendedProduct} الخيار الأمثل لتحويله من أموال نائمة إلى عائد فعلي بنسبة ${annualReturnPct}% سنوياً.`;
+      }
+      if (!covered.includes("HOW_CALCULATED")) {
+        session.topicDepth["HOW_CALCULATED"] = 1;
+        session.lastTopic = "HOW_CALCULATED";
+        return `درجة التطابق ${confidence}% جاءت من تحليل 12 معياراً مالياً في ملفك. درجة الصحة المالية ${savingsScore}/100 كانت من أبرز العوامل — تعني أن دخلك مستقر وإنفاقك متوازن، وهذا يجعلك من أكثر الملفات ملاءمةً لهذا المنتج تحديداً.`;
+      }
+      return `أي جانب يستحق مزيداً من التوضيح؟ يمكنني شرح طريقة الحساب، مقارنة البدائل، أو حساب العائد لمبلغ ادخار محدد تختاره أنت.`;
+    }
+  }
+}
+
+// POST /ai-agent/review-chat  { sessionId, message }
+// Layer 3: Namaa AI receives ONLY the Financial Insight Object. No raw banking data.
+router.post("/ai-agent/review-chat", (req, res) => {
+  const { sessionId, message } = req.body as { sessionId: string; message: string };
+
+  if (!message?.trim()) {
+    return res.status(400).json({ error: "message required" });
+  }
+
+  const sid     = (sessionId || "default").trim();
+  const session = getReviewSession(sid);
+
+  session.history.push({ role: "user", text: message });
+
+  const intent = detectIntent(message);
+  const reply  = generateReply(intent, session, message);
+
+  session.history.push({ role: "ai", text: reply });
+
+  return res.json({ reply });
+});
+
 export default router;
