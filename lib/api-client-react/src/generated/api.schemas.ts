@@ -20,20 +20,23 @@ export interface HealthScoreSummary {
   trend: number;
 }
 
-export interface DashboardMetrics {
-  monthlySpending: number;
-  savings: number;
-  upcomingPaymentsCount: number;
-  upcomingPaymentsAmount: number;
+export interface AiSummary {
+  opportunitiesFound: number;
+  yearlyBenefit: number;
+  analysisMessage: string;
 }
 
-export interface AiRecommendationCard {
+export interface AiOpportunity {
   id: string;
-  title: string;
-  summary: string;
-  savingsAmount: number;
   type: string;
-  confidenceScore: number;
+  title: string;
+  value: string;
+  badge: string;
+  badgeColor: string;
+  reason: string;
+  actionLabel: string;
+  actionHref: string;
+  benefit?: number | null;
 }
 
 export type TransactionType = typeof TransactionType[keyof typeof TransactionType];
@@ -61,10 +64,26 @@ export interface MonthlyAmount {
 export interface Dashboard {
   user: UserProfile;
   healthScore: HealthScoreSummary;
-  metrics: DashboardMetrics;
-  aiRecommendation: AiRecommendationCard;
+  aiSummary: AiSummary;
+  aiOpportunities: AiOpportunity[];
   recentTransactions: Transaction[];
   spendingChart: MonthlyAmount[];
+}
+
+export interface DashboardMetrics {
+  monthlySpending: number;
+  savings: number;
+  upcomingPaymentsCount: number;
+  upcomingPaymentsAmount: number;
+}
+
+export interface AiRecommendationCard {
+  id: string;
+  title: string;
+  summary: string;
+  savingsAmount: number;
+  type: string;
+  confidenceScore: number;
 }
 
 export interface AgentOption {
@@ -90,6 +109,7 @@ export interface AgentQuestion {
 export interface AgentAnswerInput {
   stepNumber: number;
   selectedKey: string;
+  sessionId?: string | null;
 }
 
 export interface AgentResponse {

@@ -6,8 +6,8 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface AgentAnswerInput {
-  stepNumber: number;
-  selectedKey: string;
-  sessionId?: string | null;
+export interface AiSummary {
+  opportunitiesFound: number;
+  yearlyBenefit: number;
+  analysisMessage: string;
 }

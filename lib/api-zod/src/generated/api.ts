@@ -29,20 +29,23 @@ export const GetDashboardResponse = zod.object({
   "label": zod.string(),
   "trend": zod.number()
 }),
-  "metrics": zod.object({
-  "monthlySpending": zod.number(),
-  "savings": zod.number(),
-  "upcomingPaymentsCount": zod.number(),
-  "upcomingPaymentsAmount": zod.number()
+  "aiSummary": zod.object({
+  "opportunitiesFound": zod.number(),
+  "yearlyBenefit": zod.number(),
+  "analysisMessage": zod.string()
 }),
-  "aiRecommendation": zod.object({
+  "aiOpportunities": zod.array(zod.object({
   "id": zod.string(),
-  "title": zod.string(),
-  "summary": zod.string(),
-  "savingsAmount": zod.number(),
   "type": zod.string(),
-  "confidenceScore": zod.number()
-}),
+  "title": zod.string(),
+  "value": zod.string(),
+  "badge": zod.string(),
+  "badgeColor": zod.string(),
+  "reason": zod.string(),
+  "actionLabel": zod.string(),
+  "actionHref": zod.string(),
+  "benefit": zod.number().nullish()
+})),
   "recentTransactions": zod.array(zod.object({
   "id": zod.string(),
   "merchant": zod.string(),
@@ -83,7 +86,8 @@ export const GetAiAgentFlowResponse = zod.object({
  */
 export const SubmitAgentAnswerBody = zod.object({
   "stepNumber": zod.number(),
-  "selectedKey": zod.string()
+  "selectedKey": zod.string(),
+  "sessionId": zod.string().nullish()
 })
 
 export const SubmitAgentAnswerResponse = zod.object({

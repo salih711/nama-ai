@@ -5,8 +5,8 @@
  * Namaa AI Financial Agent API for Alinma Bank
  * OpenAPI spec version: 0.1.0
  */
-import type { AiRecommendationCard } from './aiRecommendationCard';
-import type { DashboardMetrics } from './dashboardMetrics';
+import type { AiOpportunity } from './aiOpportunity';
+import type { AiSummary } from './aiSummary';
 import type { HealthScoreSummary } from './healthScoreSummary';
 import type { MonthlyAmount } from './monthlyAmount';
 import type { Transaction } from './transaction';
@@ -15,8 +15,8 @@ import type { UserProfile } from './userProfile';
 export interface Dashboard {
   user: UserProfile;
   healthScore: HealthScoreSummary;
-  metrics: DashboardMetrics;
-  aiRecommendation: AiRecommendationCard;
+  aiSummary: AiSummary;
+  aiOpportunities: AiOpportunity[];
   recentTransactions: Transaction[];
   spendingChart: MonthlyAmount[];
 }

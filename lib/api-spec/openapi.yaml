@@ -207,16 +207,18 @@ components:
     # ─── Dashboard ───────────────────────────────────────────────
     Dashboard:
       type: object
-      required: [user, healthScore, metrics, aiRecommendation, recentTransactions, spendingChart]
+      required: [user, healthScore, aiSummary, aiOpportunities, recentTransactions, spendingChart]
       properties:
         user:
           $ref: "#/components/schemas/UserProfile"
         healthScore:
           $ref: "#/components/schemas/HealthScoreSummary"
-        metrics:
-          $ref: "#/components/schemas/DashboardMetrics"
-        aiRecommendation:
-          $ref: "#/components/schemas/AiRecommendationCard"
+        aiSummary:
+          $ref: "#/components/schemas/AiSummary"
+        aiOpportunities:
+          type: array
+          items:
+            $ref: "#/components/schemas/AiOpportunity"
         recentTransactions:
           type: array
           items:
@@ -225,6 +227,43 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/MonthlyAmount"
+
+    AiSummary:
+      type: object
+      required: [opportunitiesFound, yearlyBenefit, analysisMessage]
+      properties:
+        opportunitiesFound:
+          type: integer
+        yearlyBenefit:
+          type: number
+        analysisMessage:
+          type: string
+
+    AiOpportunity:
+      type: object
+      required: [id, type, title, value, badge, badgeColor, reason, actionLabel, actionHref]
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+        value:
+          type: string
+        badge:
+          type: string
+        badgeColor:
+          type: string
+        reason:
+          type: string
+        actionLabel:
+          type: string
+        actionHref:
+          type: string
+        benefit:
+          type: number
+          nullable: true
 
     UserProfile:
       type: object
@@ -353,6 +392,9 @@ components:
           type: integer
         selectedKey:
           type: string
+        sessionId:
+          type: string
+          nullable: true
 
     AgentResponse:
       type: object
