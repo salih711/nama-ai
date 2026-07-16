@@ -1,0 +1,84 @@
+Redesign ONLY the "خدمات نماء الذكية" section.
+
+Do NOT change:
+- Colors
+- Typography
+- Card style
+- Grid
+- Animations
+- Icons style
+- Spacing
+- Responsive layout
+- Banking services section
+
+Keep the existing premium UI exactly the same.
+
+The goal is to simplify the AI experience.
+
+Replace all current AI services with ONLY these five services:
+
+---------------------------------------------------
+
+1. 📊 تحليل الصحة المالية
+Description:
+حلل وضعك المالي بالكامل واحصل على درجة مالية وتقرير ذكي مع نقاط القوة وفرص التحسين.
+
+Button:
+ابدأ التحليل
+
+---------------------------------------------------
+
+2. 🎯 التوصية الذكية
+Description:
+بعد تحليل بياناتك، يقترح نماء أفضل المنتجات المالية المناسبة مع شرح واضح لأسباب كل توصية.
+
+Button:
+اعرض التوصيات
+
+---------------------------------------------------
+
+3. 💰 خطة الادخار
+Description:
+أنشئ خطة ادخار شخصية بناءً على دخلك وهدفك المالي والمدة التي تحددها.
+
+Button:
+أنشئ الخطة
+
+---------------------------------------------------
+
+4. 📈 المستشار الاستثماري
+Description:
+حلل مستوى المخاطرة المناسب لك واحصل على اقتراحات استثمارية تتوافق مع أهدافك.
+
+Button:
+ابدأ التقييم
+
+---------------------------------------------------
+
+5. 🏦 مستشار التمويل
+Description:
+اعرف أفضل خيارات التمويل المناسبة لوضعك المالي مع تحليل القدرة على السداد.
+
+Button:
+ابدأ التقييم
+
+---------------------------------------------------
+
+Remove completely:
+
+- مساعد نماء
+- التقرير الأسبوعي
+- الدرجة المالية
+
+Those are NOT separate services anymore.
+
+Financial Score should become part of Financial Health Analysis.
+
+Weekly Report should become part of the generated AI report.
+
+The AI Assistant should be integrated as a floating chat button available across the application instead of being a standalone service.
+
+All AI services should feel like they belong to one intelligent AI engine called "محرك نماء الذكي".
+
+Do not redesign the page.
+Only improve the information architecture and simplify the user journey.

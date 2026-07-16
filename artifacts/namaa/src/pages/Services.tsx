@@ -12,9 +12,6 @@ import {
   PiggyBank,
   TrendingUp,
   Landmark,
-  MessageSquare,
-  CalendarDays,
-  Activity,
   ChevronLeft,
   Brain,
   Zap,
@@ -62,54 +59,41 @@ const BANKING_SERVICES: { icon: React.ElementType; title: string; description: s
   },
 ];
 
-const AI_SERVICES: { icon: React.ElementType; title: string; description: string; href: string }[] = [
+const AI_SERVICES: { icon: React.ElementType; title: string; description: string; href: string; cta: string }[] = [
   {
     icon: FileBarChart2,
-    title: "تقرير الصحة المالية",
-    description: "تقرير مُولَّد بالذكاء الاصطناعي يُحلّل دخلك وإنفاقك ومدخراتك والتزاماتك كاملاً.",
+    title: "تحليل الصحة المالية",
+    description: "حلل وضعك المالي بالكامل واحصل على درجة مالية وتقرير ذكي مع نقاط القوة وفرص التحسين.",
     href: "/ai-agent?service=health-report",
+    cta: "ابدأ التحليل",
   },
   {
     icon: Sparkles,
     title: "التوصية الذكية",
-    description: "نماء يقارن جميع المنتجات المالية ويوصي بالأفضل لك مع شرح مفصّل لكل رقم.",
+    description: "بعد تحليل بياناتك، يقترح نماء أفضل المنتجات المالية المناسبة مع شرح واضح لأسباب كل توصية.",
     href: "/ai-agent?service=smart-recommendation",
+    cta: "اعرض التوصيات",
   },
   {
     icon: PiggyBank,
     title: "خطة الادخار",
-    description: "نماء يُنشئ خطة ادخار مخصصة بناءً على أهدافك والهامش الشهري المتاح لديك.",
+    description: "أنشئ خطة ادخار شخصية بناءً على دخلك وهدفك المالي والمدة التي تحددها.",
     href: "/ai-agent?service=savings-planner",
+    cta: "أنشئ الخطة",
   },
   {
     icon: TrendingUp,
     title: "المستشار الاستثماري",
-    description: "نماء يقترح منتجات استثمارية مناسبة لملف مخاطرك وأهدافك قصيرة وطويلة المدى.",
+    description: "حلل مستوى المخاطرة المناسب لك واحصل على اقتراحات استثمارية تتوافق مع أهدافك.",
     href: "/ai-agent?service=investment-advisor",
+    cta: "ابدأ التقييم",
   },
   {
     icon: Landmark,
     title: "مستشار التمويل",
-    description: "نماء يوصي بأنسب خيار تمويل بناءً على قدرتك الائتمانية ومعايير الأهلية.",
+    description: "اعرف أفضل خيارات التمويل المناسبة لوضعك المالي مع تحليل القدرة على السداد.",
     href: "/ai-agent?service=financing-advisor",
-  },
-  {
-    icon: MessageSquare,
-    title: "مساعد نماء",
-    description: "اطرح أي سؤال مالي بلغة طبيعية واحصل على إجابات شخصية مخصصة لوضعك.",
-    href: "/ai-agent?service=smart-recommendation",
-  },
-  {
-    icon: CalendarDays,
-    title: "التقرير الأسبوعي",
-    description: "احصل على ملخص مالي أسبوعي مُولَّد تلقائياً مع توصيات وتنبيهات مخصصة.",
-    href: "/ai-agent?service=health-report",
-  },
-  {
-    icon: Activity,
-    title: "الدرجة المالية",
-    description: "اطّلع على درجة صحتك المالية المُولَّدة بالذكاء الاصطناعي مع خطوات تحسين عملية.",
-    href: "/ai-agent?service=health-report",
+    cta: "ابدأ التقييم",
   },
 ];
 
@@ -147,7 +131,7 @@ function ServiceCard({
   type,
   delay,
 }: {
-  svc: { icon: React.ElementType; title: string; description: string; href: string };
+  svc: { icon: React.ElementType; title: string; description: string; href: string; cta?: string };
   type: "ai" | "traditional";
   delay: number;
 }) {
@@ -198,7 +182,7 @@ function ServiceCard({
           {/* Footer CTA */}
           <div className="flex items-center justify-end mt-4 pt-3 border-t border-border">
             <span className="text-xs font-semibold text-primary flex items-center gap-1 group-hover:gap-1.5 transition-all">
-              {type === "ai" ? "ابدأ التقييم" : "افتح الخدمة"}
+              {type === "ai" ? (svc.cta ?? "ابدأ التقييم") : "افتح الخدمة"}
               <ChevronLeft className="w-3 h-3" />
             </span>
           </div>
@@ -223,7 +207,7 @@ export default function Services() {
           <h1 className="text-2xl font-bold text-foreground">خدمات نماء</h1>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/8 border border-primary/15 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-xs font-semibold text-primary">14 خدمة</span>
+            <span className="text-xs font-semibold text-primary">11 خدمة</span>
           </span>
         </div>
         <p className="text-sm text-muted-foreground">
