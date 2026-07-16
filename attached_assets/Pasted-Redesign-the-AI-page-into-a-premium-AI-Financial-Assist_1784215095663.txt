@@ -1,0 +1,142 @@
+Redesign the "AI نماء" page into a premium AI Financial Assistant hub.
+
+Do NOT change the application's design system, colors, typography, spacing, animations or navigation.
+
+This is NOT a generic chatbot.
+
+It is a financial AI assistant integrated with the banking experience.
+
+------------------------------------------------
+
+Page Structure
+
+1. Hero Header
+
+🤖 مساعد نماء
+
+مرحباً صالح 👋
+
+يمكنني مساعدتك في تحليل وضعك المالي، شرح المنتجات، واقتراح أفضل القرارات بناءً على بياناتك.
+
+------------------------------------------------
+
+2. Smart Suggestions (Dynamic)
+
+Show personalized suggestion cards based on the user's financial data.
+
+Examples:
+
+⭐ لديك فائض شهري 420 ريال
+→ استكشف أفضل طريقة لاستثماره
+
+⭐ تم العثور على بطاقة تناسب نمط استخدامك
+
+⭐ راجع تقرير صحتك المالية
+
+⭐ أنشئ خطة ادخار
+
+⭐ تحقق من أهليتك للتمويل
+
+Display 4–6 suggestion cards.
+
+These suggestions must change depending on financial analysis.
+
+------------------------------------------------
+
+3. AI Services
+
+Show premium service cards.
+
+تحليل الصحة المالية
+
+التوصية الذكية
+
+الادخار
+
+الاستثمار
+
+التمويل
+
+مقارنة المنتجات
+
+Each card opens the related AI workflow.
+
+------------------------------------------------
+
+4. Conversation Area
+
+Below the services place a modern chat area.
+
+Placeholder:
+
+"اسأل نماء أي سؤال عن حساباتك أو منتجاتك المالية..."
+
+Example quick questions:
+
+كيف حسبت الفائض؟
+
+لماذا رشحت هذا المنتج؟
+
+ما أفضل بطاقة لي؟
+
+كيف أزيد ادخاري؟
+
+هل يناسبني التمويل؟
+
+ما أفضل استثمار لحالتي؟
+
+------------------------------------------------
+
+5. AI Answers
+
+Responses must be financial only.
+
+Never behave like ChatGPT.
+
+Always answer using:
+
+• user's financial profile
+
+• transaction history
+
+• banking products
+
+• financial reports
+
+• recommendations
+
+The assistant should explain WHY every recommendation exists.
+
+------------------------------------------------
+
+6. Explainability
+
+Whenever AI recommends anything include:
+
+سبب التوصية
+
+البيانات المستخدمة
+
+درجة التوافق
+
+الإجراء المقترح
+
+Example:
+
+"تم تحليل آخر 90 يوماً من معاملاتك.
+
+لاحظ نماء فائضاً شهرياً قدره 420 ريال.
+
+بناءً على ذلك تم ترشيح خطة الادخار الذكية بنسبة توافق 94٪."
+
+------------------------------------------------
+
+7. Empty State
+
+Before typing, show suggested actions instead of an empty chat.
+
+------------------------------------------------
+
+Keep everything feeling like a premium banking assistant—not a general-purpose chatbot.
+
+The experience should feel like the AI command center of the banking application.

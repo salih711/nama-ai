@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "الرئيسية", icon: Home, href: "/" },
-  { label: "نماء AI", icon: Sparkles, href: "/ai-agent" },
+  { label: "نماء AI", icon: Sparkles, href: "/ai" },
   { label: "خدمات نماء", icon: LayoutGrid, href: "/services" },
   { label: "البطاقات", icon: CreditCard, href: "/cards" },
   { label: "التمويل", icon: Landmark, href: "/financing" },

@@ -7,6 +7,7 @@ import { Route, Switch, Router as WouterRouter } from 'wouter';
 import { AppLayout } from '@/components/layout/AppLayout';
 import Dashboard from '@/pages/Dashboard';
 import AiAgent from '@/pages/AiAgent';
+import NamaaHub from '@/pages/NamaaHub';
 import Recommendation from '@/pages/Recommendation';
 import Cards from '@/pages/Cards';
 import Financing from '@/pages/Financing';
@@ -27,6 +28,7 @@ function Router() {
     <AppLayout>
       <Switch>
         <Route path="/" component={Dashboard} />
+        <Route path="/ai" component={NamaaHub} />
         <Route path="/ai-agent" component={AiAgent} />
         <Route path="/recommendation/:id" component={Recommendation} />
         <Route path="/cards" component={Cards} />
