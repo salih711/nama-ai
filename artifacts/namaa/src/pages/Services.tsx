@@ -1,196 +1,269 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import {
+  ArrowLeftRight,
+  Receipt,
+  FileText,
+  Users,
+  CreditCard,
+  Globe,
   FileBarChart2,
   Sparkles,
   PiggyBank,
   TrendingUp,
   Landmark,
-  ArrowLeftRight,
-  Receipt,
-  CreditCard,
-  FileText,
+  MessageSquare,
+  CalendarDays,
+  Activity,
   ChevronLeft,
   Brain,
   Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// ─── Service definitions ──────────────────────────────────────────────────────
-//
-//  type "ai"          → collects financial profile via /ai-agent assessment flow
-//  type "traditional" → opens the target page directly, no questions asked
-//
-const SERVICES: {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-  href: string;
-  type: "ai" | "traditional";
-}[] = [
-  // ── AI-powered ────────────────────────────────────────────────────────────
-  {
-    icon: FileBarChart2,
-    title: "تقرير الصحة المالية",
-    description:
-      "تقرير مُولَّد بالذكاء الاصطناعي يُحلّل دخلك وإنفاقك ومدخراتك والتزاماتك لتقييم وضعك المالي الكامل.",
-    href: "/ai-agent",
-    type: "ai",
-  },
-  {
-    icon: Sparkles,
-    title: "توصية المنتج الذكية",
-    description:
-      "نماء يقارن جميع المنتجات المالية ويوصي بالأفضل لك مع شرح مفصّل لكل سبب وكل رقم.",
-    href: "/ai-agent",
-    type: "ai",
-  },
-  {
-    icon: PiggyBank,
-    title: "مخطط الادخار الذكي",
-    description:
-      "نماء يُنشئ خطة ادخار مخصصة بناءً على أهدافك وعادات إنفاقك والهامش الشهري المتاح لديك.",
-    href: "/ai-agent",
-    type: "ai",
-  },
-  {
-    icon: TrendingUp,
-    title: "مستشار الاستثمار",
-    description:
-      "نماء يقترح منتجات استثمارية مناسبة لملف مخاطرك وأهدافك المالية قصيرة وطويلة المدى.",
-    href: "/ai-agent",
-    type: "ai",
-  },
-  {
-    icon: Landmark,
-    title: "مستشار التمويل",
-    description:
-      "نماء يوصي بأنسب خيار تمويل بناءً على قدرتك الائتمانية ومعايير الأهلية الحالية.",
-    href: "/ai-agent",
-    type: "ai",
-  },
-  // ── Traditional — direct, no assessment needed ─────────────────────────────
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const BANKING_SERVICES: { icon: React.ElementType; title: string; description: string; href: string }[] = [
   {
     icon: ArrowLeftRight,
-    title: "تحويل سريع",
-    description:
-      "حوّل الأموال إلى أي حساب داخلي أو خارجي فورياً دون أي خطوات إضافية.",
+    title: "التحويل السريع",
+    description: "حوّل الأموال إلى أي حساب داخلي فورياً دون أي خطوات إضافية.",
     href: "/cards",
-    type: "traditional",
   },
   {
     icon: Receipt,
-    title: "الدفعات",
-    description:
-      "سدّد فواتيرك ومدفوعاتك الشهرية من مكان واحد بضغطة واحدة وبدون رسوم.",
+    title: "المدفوعات",
+    description: "سدّد فواتيرك ومدفوعاتك الشهرية من مكان واحد وبدون رسوم.",
     href: "/cards",
-    type: "traditional",
-  },
-  {
-    icon: CreditCard,
-    title: "البطاقات",
-    description:
-      "أدِر بطاقاتك الائتمانية والمدينة، تحكّم في الحدود وأوقف أو فعّل أي بطاقة فوراً.",
-    href: "/cards",
-    type: "traditional",
   },
   {
     icon: FileText,
     title: "كشف الحساب",
-    description:
-      "اطّلع على كشف حسابك الشهري التفصيلي وحمّله بصيغة PDF في أي وقت.",
+    description: "اطّلع على كشف حسابك التفصيلي وحمّله بصيغة PDF في أي وقت.",
     href: "/reports",
-    type: "traditional",
+  },
+  {
+    icon: Users,
+    title: "إدارة المستفيدين",
+    description: "أضف مستفيدين جدداً وأدِر قائمة حساباتك المحفوظة بسهولة.",
+    href: "/cards",
+  },
+  {
+    icon: CreditCard,
+    title: "البطاقات",
+    description: "أدِر بطاقاتك الائتمانية والمدينة، وتحكّم في الحدود والإيقاف الفوري.",
+    href: "/cards",
+  },
+  {
+    icon: Globe,
+    title: "التحويل الدولي",
+    description: "أرسل الأموال إلى الخارج بأسعار صرف تنافسية وتتبّع فوري للحوالة.",
+    href: "/cards",
   },
 ];
 
-// ─── Component ────────────────────────────────────────────────────────────────
+const AI_SERVICES: { icon: React.ElementType; title: string; description: string; href: string }[] = [
+  {
+    icon: FileBarChart2,
+    title: "تقرير الصحة المالية",
+    description: "تقرير مُولَّد بالذكاء الاصطناعي يُحلّل دخلك وإنفاقك ومدخراتك والتزاماتك كاملاً.",
+    href: "/ai-agent",
+  },
+  {
+    icon: Sparkles,
+    title: "التوصية الذكية",
+    description: "نماء يقارن جميع المنتجات المالية ويوصي بالأفضل لك مع شرح مفصّل لكل رقم.",
+    href: "/ai-agent",
+  },
+  {
+    icon: PiggyBank,
+    title: "خطة الادخار",
+    description: "نماء يُنشئ خطة ادخار مخصصة بناءً على أهدافك والهامش الشهري المتاح لديك.",
+    href: "/ai-agent",
+  },
+  {
+    icon: TrendingUp,
+    title: "المستشار الاستثماري",
+    description: "نماء يقترح منتجات استثمارية مناسبة لملف مخاطرك وأهدافك قصيرة وطويلة المدى.",
+    href: "/ai-agent",
+  },
+  {
+    icon: Landmark,
+    title: "مستشار التمويل",
+    description: "نماء يوصي بأنسب خيار تمويل بناءً على قدرتك الائتمانية ومعايير الأهلية.",
+    href: "/ai-agent",
+  },
+  {
+    icon: MessageSquare,
+    title: "مساعد نماء",
+    description: "اطرح أي سؤال مالي بلغة طبيعية واحصل على إجابات شخصية مخصصة لوضعك.",
+    href: "/ai-agent",
+  },
+  {
+    icon: CalendarDays,
+    title: "التقرير الأسبوعي",
+    description: "احصل على ملخص مالي أسبوعي مُولَّد تلقائياً مع توصيات وتنبيهات مخصصة.",
+    href: "/ai-agent",
+  },
+  {
+    icon: Activity,
+    title: "الدرجة المالية",
+    description: "اطّلع على درجة صحتك المالية المُولَّدة بالذكاء الاصطناعي مع خطوات تحسين عملية.",
+    href: "/ai-agent",
+  },
+];
+
+// ─── Section header component ─────────────────────────────────────────────────
+function SectionHeader({
+  title,
+  ai,
+  delay,
+}: {
+  title: string;
+  ai?: boolean;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.32, delay }}
+      className="flex items-center gap-3"
+    >
+      <h2 className="text-base font-bold text-foreground">{title}</h2>
+      {ai && (
+        <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/15">
+          <Brain className="w-2.5 h-2.5 shrink-0" />
+          AI Powered
+        </span>
+      )}
+    </motion.div>
+  );
+}
+
+// ─── Card component ───────────────────────────────────────────────────────────
+function ServiceCard({
+  svc,
+  type,
+  delay,
+}: {
+  svc: { icon: React.ElementType; title: string; description: string; href: string };
+  type: "ai" | "traditional";
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.38, delay }}
+    >
+      <Link href={svc.href}>
+        <motion.div
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className={cn(
+            "bg-card rounded-2xl border border-card-border p-5 shadow-sm cursor-pointer",
+            "h-full flex flex-col",
+            "hover:border-primary/25 hover:shadow-md transition-all duration-200 group"
+          )}
+        >
+          {/* Top row: icon + badge */}
+          <div className="flex items-start justify-between mb-4">
+            <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+              <svc.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            </div>
+            {type === "ai" ? (
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/15">
+                <Brain className="w-2.5 h-2.5 shrink-0" />
+                AI Powered
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border">
+                <Zap className="w-2.5 h-2.5 shrink-0" />
+                مباشر
+              </span>
+            )}
+          </div>
+
+          {/* Title */}
+          <h3 className="text-sm font-bold text-foreground mb-1.5 leading-snug">
+            {svc.title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-xs text-muted-foreground leading-relaxed flex-1">
+            {svc.description}
+          </p>
+
+          {/* Footer CTA */}
+          <div className="flex items-center justify-end mt-4 pt-3 border-t border-border">
+            <span className="text-xs font-semibold text-primary flex items-center gap-1 group-hover:gap-1.5 transition-all">
+              {type === "ai" ? "ابدأ التقييم" : "افتح الخدمة"}
+              <ChevronLeft className="w-3 h-3" />
+            </span>
+          </div>
+        </motion.div>
+      </Link>
+    </motion.div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Services() {
   return (
-    <div className="max-w-[1100px] mx-auto px-6 py-10 pb-24 space-y-6">
+    <div className="max-w-[1100px] mx-auto px-6 py-10 pb-24 space-y-10">
 
-      {/* ── Header ── */}
+      {/* ── Page header ── */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="flex items-start justify-between flex-wrap gap-3"
       >
-        <div>
-          <div className="flex items-center gap-3 mb-1 flex-wrap">
-            <h1 className="text-2xl font-bold text-foreground">خدمات نماء</h1>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/8 border border-primary/15 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-semibold text-primary">9 خدمات</span>
-            </span>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            خدمات الذكاء الاصطناعي تطرح أسئلة مالية عند تفعيلها فقط — الخدمات المصرفية تُفتح مباشرة.
-          </p>
+        <div className="flex items-center gap-3 mb-1 flex-wrap">
+          <h1 className="text-2xl font-bold text-foreground">خدمات نماء</h1>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/8 border border-primary/15 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-xs font-semibold text-primary">14 خدمة</span>
+          </span>
         </div>
+        <p className="text-sm text-muted-foreground">
+          الخدمات المصرفية تُفتح مباشرة — خدمات نماء الذكية تبدأ بتقييم مالي مخصص.
+        </p>
       </motion.div>
 
-      {/* ── Services Grid ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {SERVICES.map((svc, i) => (
-          <motion.div
-            key={svc.title}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.38, delay: 0.06 + i * 0.06 }}
-          >
-            <Link href={svc.href}>
-              <motion.div
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.18 }}
-                className={cn(
-                  "bg-card rounded-2xl border border-card-border p-5 shadow-sm cursor-pointer",
-                  "h-full flex flex-col",
-                  "hover:border-primary/25 hover:shadow-md transition-all duration-200 group"
-                )}
-              >
-                {/* Top row: icon + badge */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
-                    <svc.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                  </div>
+      {/* ══ Section 1: Banking Services ══════════════════════════════════════ */}
+      <section className="space-y-4">
+        <SectionHeader title="الخدمات المصرفية" delay={0.08} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {BANKING_SERVICES.map((svc, i) => (
+            <ServiceCard
+              key={svc.title}
+              svc={svc}
+              type="traditional"
+              delay={0.12 + i * 0.06}
+            />
+          ))}
+        </div>
+      </section>
 
-                  {/* AI badge vs Direct badge */}
-                  {svc.type === "ai" ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/15">
-                      <Brain className="w-2.5 h-2.5 shrink-0" />
-                      AI Powered
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border">
-                      <Zap className="w-2.5 h-2.5 shrink-0" />
-                      مباشر
-                    </span>
-                  )}
-                </div>
+      {/* ── Divider ── */}
+      <div className="border-t border-border" />
 
-                {/* Title */}
-                <h3 className="text-sm font-bold text-foreground mb-1.5 leading-snug">
-                  {svc.title}
-                </h3>
+      {/* ══ Section 2: AI Services ════════════════════════════════════════════ */}
+      <section className="space-y-4">
+        <SectionHeader title="خدمات نماء الذكية" ai delay={0.1} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {AI_SERVICES.map((svc, i) => (
+            <ServiceCard
+              key={svc.title}
+              svc={svc}
+              type="ai"
+              delay={0.14 + i * 0.06}
+            />
+          ))}
+        </div>
+      </section>
 
-                {/* Description — flex-1 keeps all cards equal height */}
-                <p className="text-xs text-muted-foreground leading-relaxed flex-1">
-                  {svc.description}
-                </p>
-
-                {/* Footer CTA */}
-                <div className="flex items-center justify-end mt-4 pt-3 border-t border-border">
-                  <span className="text-xs font-semibold text-primary flex items-center gap-1 group-hover:gap-1.5 transition-all">
-                    {svc.type === "ai" ? "ابدأ التقييم" : "افتح الخدمة"}
-                    <ChevronLeft className="w-3 h-3" />
-                  </span>
-                </div>
-              </motion.div>
-            </Link>
-          </motion.div>
-        ))}
-      </div>
     </div>
   );
 }
