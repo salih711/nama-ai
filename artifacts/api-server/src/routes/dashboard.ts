@@ -8,6 +8,29 @@ router.get("/dashboard", (req, res) => {
       name: "صالح",
       accountType: "حساب مميز",
     },
+    accountBalance: {
+      current: 24350.75,
+      savings: 8200.0,
+      accountNumber: "••••••1234",
+      iban: "SA44 2000 0001 2345 6789 1234",
+      trend: 4.1,                    // % change vs last month
+    },
+    heroRecommendation: {
+      id:          "hero-saving",
+      type:        "saving",
+      matchScore:  94,
+      triggerLabel:"رصيدك الجاري غير المستغل",
+      title:       "حوّل الفائض إلى مدخرات تعمل لصالحك",
+      explanation: "لاحظ نماء أن رصيدك الجاري يتجاوز إنفاقك الشهري المعتاد بمعدل 420 ريال لم تُستخدم خلال الأشهر الثلاثة الماضية. تحويلها تلقائياً إلى حساب التوفير يضاعف عائدك الشهري ويُنمّي ثروتك بـ 5,040 ريال سنوياً دون أي تغيير في عاداتك.",
+      benefit:     5040,
+      reasonBreakdown: [
+        { label: "الفائض الشهري المرصود", value: "420 ريال" },
+        { label: "متوسط العائد السنوي",  value: "3.7%" },
+        { label: "الفائدة السنوية المتوقعة", value: "5,040 ريال" },
+      ],
+      actionHref:   "/recommendation/rec-001",
+      productLabel: "خطة الادخار الذكية",
+    },
     healthScore: {
       score: 78,
       label: "وضع جيد",
